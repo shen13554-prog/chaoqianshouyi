@@ -1104,3 +1104,340 @@ a {
     opacity: 1;
   }
 }
+
+.modern-experience {
+  padding-bottom: 120px;
+}
+
+.modern-intro {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.modern-intro__label,
+.modern-section-heading > p,
+.modern-detail__header > p:first-child,
+.modern-detail-block__copy > p,
+.modern-concept > p {
+  margin: 0;
+  color: var(--vermilion);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+}
+
+.modern-intro h1 {
+  margin: 24px 0 18px;
+  color: var(--ink);
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.modern-intro > span,
+.modern-section-heading > span,
+.modern-detail__header > span {
+  width: 72px;
+  height: 1px;
+  display: block;
+  margin: 0 0 26px;
+  background: var(--gold);
+}
+
+.modern-intro > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2.1;
+  letter-spacing: 0.08em;
+}
+
+.modern-cases {
+  padding-bottom: 130px;
+}
+
+.modern-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 64px;
+  text-align: center;
+}
+
+.modern-section-heading h2 {
+  margin: 18px 0 20px;
+  color: var(--ink);
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.modern-section-heading > span {
+  margin-bottom: 0;
+}
+
+.modern-case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+}
+
+.modern-case-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 26px;
+  overflow: hidden;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--gold-soft);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.modern-case-card::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  width: 0;
+  height: 2px;
+  content: "";
+  background: var(--vermilion);
+  transition: width 220ms ease;
+}
+
+.modern-case-card:hover::after,
+.modern-case-card.is-active::after {
+  width: 100%;
+}
+
+.modern-case-card__number {
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  left: 20px;
+  color: var(--paper);
+  font-size: 14px;
+  letter-spacing: 0.16em;
+}
+
+.modern-case-card__placeholder {
+  position: relative;
+  width: 100%;
+  height: 228px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 26px;
+  background: #3c3028;
+  border: 1px solid var(--gold-soft);
+}
+
+.modern-case-card__placeholder::before,
+.modern-case-card__placeholder::after,
+.modern-placeholder::before,
+.modern-placeholder::after {
+  position: absolute;
+  content: "";
+  background: rgba(181, 151, 93, 0.52);
+}
+
+.modern-case-card__placeholder::before,
+.modern-placeholder::before {
+  width: 1px;
+  height: 54%;
+}
+
+.modern-case-card__placeholder::after,
+.modern-placeholder::after {
+  width: 54%;
+  height: 1px;
+}
+
+.modern-case-card__placeholder i {
+  width: 76px;
+  height: 76px;
+  display: block;
+  border: 1px solid rgba(238, 229, 215, 0.5);
+  border-radius: 50%;
+}
+
+.modern-case-card strong {
+  margin-bottom: 12px;
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.modern-case-card__summary {
+  min-height: 54px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.modern-case-card__action {
+  margin-top: 18px;
+  color: var(--vermilion);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.modern-detail {
+  scroll-margin-top: 82px;
+  border-top: 1px solid var(--gold-soft);
+}
+
+.modern-detail__header {
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.modern-detail__header h2 {
+  margin: 20px 0 18px;
+  color: var(--ink);
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.modern-detail__header > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.modern-detail__flow {
+  border-top: 1px solid var(--gold-soft);
+}
+
+.modern-detail-block {
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  align-items: stretch;
+  border-bottom: 1px solid var(--gold-soft);
+  animation: modern-detail-enter 260ms ease-out both;
+}
+
+.modern-detail-block--reverse {
+  grid-template-columns: 1.18fr 0.82fr;
+}
+
+.modern-detail-block--reverse .modern-detail-block__copy {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.modern-detail-block--reverse .modern-placeholder {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.modern-detail-block__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 64px;
+}
+
+.modern-detail-block__copy h3,
+.modern-concept h3 {
+  margin: 20px 0 28px;
+  color: var(--ink);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.modern-detail-block__copy > span {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2.1;
+}
+
+.modern-detail-block__copy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modern-detail-block__copy li {
+  padding: 9px 16px;
+  color: var(--brown);
+  border: 1px solid var(--gold-soft);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.modern-placeholder {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #d8cbb8;
+  background: #342a24;
+  border-left: 1px solid var(--gold-soft);
+  border-right: 1px solid var(--gold-soft);
+}
+
+.modern-placeholder p {
+  z-index: 1;
+  margin: 0 0 10px;
+  font-size: 18px;
+  letter-spacing: 0.16em;
+}
+
+.modern-placeholder small {
+  z-index: 1;
+  color: #9e8b72;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+}
+
+.modern-concept {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 150px;
+  text-align: center;
+  animation: modern-detail-enter 260ms ease-out both;
+}
+
+.modern-concept blockquote {
+  max-width: 820px;
+  margin: 0;
+  color: var(--brown);
+  font-size: 21px;
+  line-height: 2;
+  letter-spacing: 0.08em;
+}
+
+@keyframes modern-detail-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
