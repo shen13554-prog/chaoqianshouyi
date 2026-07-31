@@ -38,13 +38,13 @@ describe('modern design translation experience', () => {
       screen.getByText('潮州嵌瓷广泛应用于祠堂、庙宇与传统民居，以屋脊、山墙上的龙凤、花鸟等立体装饰寄托吉祥寓意。'),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('色彩｜低饱和朱红、釉绿与金色关系'),
+      screen.getByText('提炼低饱和朱红、釉绿与金色关系，保留传统建筑装饰的节奏和层次。'),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('纹样｜龙凤、花鸟及卷草轮廓'),
+      screen.getByText('从龙凤、花鸟及卷草中提取轮廓与连续构图，形成可复用的现代图形语言。'),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('瓷片拼接结构｜碎片层叠、方向排列与高低起伏'),
+      screen.getByText('分析瓷片的方向排列、碎片层叠和高低起伏，呈现嵌瓷特有的立体秩序。'),
     ).toBeInTheDocument()
     expect(
       screen.getByText('将传统色彩、纹样和瓷片拼接秩序转化为空间界面、导视系统与公共艺术语言。'),
@@ -68,6 +68,42 @@ describe('modern design translation experience', () => {
       expect(screen.getByRole('img', { name })).toHaveAttribute('src', src)
       expect(screen.getByText(name)).toBeInTheDocument()
     })
+  })
+
+  it('shows three extraction exhibits only for the architecture case', () => {
+    render(<Modern />)
+
+    expect(
+      screen.getByRole('heading', { name: '色彩提取', level: 4 }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: '纹样提取', level: 4 }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: '拼接结构提取', level: 4 }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: '色彩提取占位区域' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: '纹样提取占位区域' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: '拼接结构提取占位区域' }),
+    ).toBeInTheDocument()
+  })
+
+  it('keeps the original extraction presentation for other cases', () => {
+    render(<Modern />)
+    fireEvent.click(screen.getByRole('button', { name: '02 日常新生' }))
+
+    expect(screen.getByText('花瓣曲线')).toBeInTheDocument()
+    expect(
+      screen.getByRole('img', { name: '纹样提取预览占位区域' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { name: '色彩提取', level: 4 }),
+    ).not.toBeInTheDocument()
   })
 
   it('switches the case, reveals its four-part detail, and scrolls to it', () => {

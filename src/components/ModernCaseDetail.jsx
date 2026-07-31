@@ -21,6 +21,23 @@ function SourceGallery({ images }) {
   )
 }
 
+function ExtractionGallery({ extractions }) {
+  return (
+    <div className="modern-extraction-grid">
+      {extractions.map((extraction) => (
+        <section className="modern-extraction-item" key={extraction.id}>
+          <div className="modern-extraction-item__copy">
+            <p>{extraction.number}</p>
+            <h4>{extraction.title}</h4>
+            <span>{extraction.description}</span>
+          </div>
+          <ExhibitPlaceholder label={extraction.title} />
+        </section>
+      ))}
+    </div>
+  )
+}
+
 export default function ModernCaseDetail({ item, detailRef }) {
   return (
     <section className="modern-detail" ref={detailRef} aria-labelledby="modern-detail-title">
@@ -43,15 +60,19 @@ export default function ModernCaseDetail({ item, detailRef }) {
             : <ExhibitPlaceholder label="传统作品展示" />}
         </article>
 
-        <article className="modern-detail-block modern-detail-block--reverse">
+        <article className={`modern-detail-block ${item.extractions?.length ? 'modern-detail-block--extraction' : 'modern-detail-block--reverse'}`}>
           <div className="modern-detail-block__copy">
             <p>02 / EXTRACT</p>
             <h3>嵌瓷元素提取</h3>
-            <ul>
-              {item.elements.map((element) => <li key={element}>{element}</li>)}
-            </ul>
+            {!item.extractions?.length && (
+              <ul>
+                {item.elements.map((element) => <li key={element}>{element}</li>)}
+              </ul>
+            )}
           </div>
-          <ExhibitPlaceholder label="纹样提取预览" />
+          {item.extractions?.length
+            ? <ExtractionGallery extractions={item.extractions} />
+            : <ExhibitPlaceholder label="纹样提取预览" />}
         </article>
 
         <article className="modern-detail-block">

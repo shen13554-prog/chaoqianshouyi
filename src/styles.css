@@ -1344,6 +1344,15 @@ a {
   grid-row: 1;
 }
 
+.modern-detail-block--extraction {
+  grid-template-columns: 1fr;
+  padding: 72px 0;
+}
+
+.modern-detail-block--extraction > .modern-detail-block__copy {
+  padding: 0 64px 48px;
+}
+
 .modern-detail-block__copy {
   display: flex;
   flex-direction: column;
@@ -1437,6 +1446,53 @@ a {
   font-size: 14px;
   letter-spacing: 0.12em;
   text-align: center;
+}
+
+.modern-extraction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--vermilion);
+  border-bottom: 1px solid var(--gold-soft);
+}
+
+.modern-extraction-item {
+  min-width: 0;
+  padding: 28px;
+  background: var(--paper);
+  border-right: 1px solid var(--vermilion);
+}
+
+.modern-extraction-item:last-child {
+  border-right: 0;
+}
+
+.modern-extraction-item__copy > p {
+  margin: 0;
+  color: var(--vermilion);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+
+.modern-extraction-item__copy h4 {
+  margin: 16px 0;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.modern-extraction-item__copy span {
+  min-height: 90px;
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.modern-extraction-item .modern-placeholder {
+  min-height: 260px;
+  margin-top: 24px;
+  border: 1px solid var(--gold-soft);
 }
 
 .modern-concept {
