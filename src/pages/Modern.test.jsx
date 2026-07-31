@@ -54,6 +54,22 @@ describe('modern design translation experience', () => {
     ).toBeInTheDocument()
   })
 
+  it('shows the four named source buildings for the architecture case', () => {
+    render(<Modern />)
+
+    const sourceImages = [
+      ['安济王庙', '/images/building/building-01.webp'],
+      ['广济楼天后宫', '/images/building/building-02.png'],
+      ['观音庙', '/images/building/building-03.png'],
+      ['从熙公祠', '/images/building/building-04.png'],
+    ]
+
+    sourceImages.forEach(([name, src]) => {
+      expect(screen.getByRole('img', { name })).toHaveAttribute('src', src)
+      expect(screen.getByText(name)).toBeInTheDocument()
+    })
+  })
+
   it('switches the case, reveals its four-part detail, and scrolls to it', () => {
     render(<Modern />)
 

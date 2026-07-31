@@ -5,6 +5,12 @@ export const modernCases = [
     title: '建筑再生',
     summary: '让屋脊上的装饰语言进入当代公共空间。',
     source: '潮州嵌瓷广泛应用于祠堂、庙宇与传统民居，以屋脊、山墙上的龙凤、花鸟等立体装饰寄托吉祥寓意。',
+    sourceImages: [
+      { src: '/images/building/building-01.webp', name: '安济王庙' },
+      { src: '/images/building/building-02.png', name: '广济楼天后宫' },
+      { src: '/images/building/building-03.png', name: '观音庙' },
+      { src: '/images/building/building-04.png', name: '从熙公祠' },
+    ],
     elements: [
       '色彩｜低饱和朱红、釉绿与金色关系',
       '纹样｜龙凤、花鸟及卷草轮廓',

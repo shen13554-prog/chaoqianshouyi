@@ -8,6 +8,19 @@ function ExhibitPlaceholder({ label }) {
   )
 }
 
+function SourceGallery({ images }) {
+  return (
+    <div className="modern-source-gallery" aria-label="传统建筑来源">
+      {images.map((image) => (
+        <figure key={image.src}>
+          <img src={image.src} alt={image.name} />
+          <figcaption>{image.name}</figcaption>
+        </figure>
+      ))}
+    </div>
+  )
+}
+
 export default function ModernCaseDetail({ item, detailRef }) {
   return (
     <section className="modern-detail" ref={detailRef} aria-labelledby="modern-detail-title">
@@ -25,7 +38,9 @@ export default function ModernCaseDetail({ item, detailRef }) {
             <h3>传统来源</h3>
             <span>{item.source}</span>
           </div>
-          <ExhibitPlaceholder label="传统作品展示" />
+          {item.sourceImages?.length
+            ? <SourceGallery images={item.sourceImages} />
+            : <ExhibitPlaceholder label="传统作品展示" />}
         </article>
 
         <article className="modern-detail-block modern-detail-block--reverse">

@@ -1410,6 +1410,35 @@ a {
   letter-spacing: 0.22em;
 }
 
+.modern-source-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  padding: 1px;
+  background: var(--gold-soft);
+}
+
+.modern-source-gallery figure {
+  margin: 0;
+  padding: 12px 12px 14px;
+  background: var(--paper);
+}
+
+.modern-source-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+}
+
+.modern-source-gallery figcaption {
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
 .modern-concept {
   min-height: 450px;
   display: flex;
