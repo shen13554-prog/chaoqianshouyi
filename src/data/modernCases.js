@@ -1,5 +1,4 @@
-export const modernCases = [
-  {
+export const architectureCase = {
     id: 'architecture',
     number: '01',
     title: '建筑再生',
@@ -38,10 +37,12 @@ export const modernCases = [
     ],
     application: '将传统色彩、纹样和瓷片拼接秩序转化为空间界面、导视系统与公共艺术语言。',
     concept: '通过数字化提取与重组传统文化结构，使嵌瓷非遗元素进入现代设计语境，在延续文化识别的同时形成新的应用方式。',
-  },
+}
+
+export const modernCases = [
   {
     id: 'daily',
-    number: '02',
+    number: '01',
     title: '日常新生',
     summary: '把花鸟纹样和瓷片肌理带回日常生活。',
     source: '传统嵌瓷中的牡丹、花鸟与卷草纹样，以及彩瓷碎片形成的细密质感。',
@@ -51,7 +52,7 @@ export const modernCases = [
   },
   {
     id: 'art',
-    number: '03',
+    number: '02',
     title: '艺术跨界',
     summary: '以装置和跨媒介表达重新理解嵌瓷精神。',
     source: '传统屋脊瑞兽、戏曲人物和夸张动态所形成的叙事性嵌瓷场景。',

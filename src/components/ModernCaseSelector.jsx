@@ -2,8 +2,8 @@ export default function ModernCaseSelector({ cases, activeId, onSelect }) {
   return (
     <section className="modern-cases section-container" aria-labelledby="modern-cases-title">
       <div className="modern-section-heading">
-        <p>THREE DESIGN PATHS</p>
-        <h2 id="modern-cases-title">三种转译路径</h2>
+        <p>TWO DESIGN PATHS</p>
+        <h2 id="modern-cases-title">两种转译路径</h2>
         <span aria-hidden="true" />
       </div>
 

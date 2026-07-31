@@ -59,7 +59,7 @@ describe('site routes', () => {
     ['/history', '潮嵌源流'],
     ['/materials', '嵌瓷之材'],
     ['/process', '匠心成艺'],
-    ['/building', '筑上华章'],
+    ['/building', '建筑再生'],
     ['/inheritors', '守艺传人'],
     ['/gallery', '嵌瓷作品'],
     ['/modern', '潮艺新生'],
