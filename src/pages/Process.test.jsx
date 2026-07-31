@@ -35,20 +35,32 @@ describe('process digital experience', () => {
 
     expect(startButton).toHaveAttribute('aria-pressed', 'true')
     expect(
-      screen.getByRole('heading', { name: '作品拆解' }),
+      screen.getByRole('heading', { name: '材料拆解' }),
     ).toBeInTheDocument()
   })
 
-  it('reveals the selected layer information', () => {
+  it('reveals the selected material name, role, and making method', () => {
     renderProcess()
 
-    fireEvent.click(screen.getByRole('button', { name: '瓷片' }))
+    expect(screen.getByRole('button', { name: '作品' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '瓷片' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '灰浆' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '骨架' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '工具' })).toBeInTheDocument()
 
-    expect(screen.getByText('废旧彩瓷')).toBeInTheDocument()
-    expect(screen.getByText('构成色彩和纹理')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: '灰浆' }))
+
+    expect(screen.getByText('名称')).toBeInTheDocument()
+    expect(screen.getByText('石灰灰浆')).toBeInTheDocument()
+    expect(screen.getByText('形成塑形与粘合基础')).toBeInTheDocument()
     expect(
-      screen.getByText('按纹样与色彩需求剪修，再逐片嵌贴。'),
+      screen.getByText('将石灰、砂与水调和，分层敷抹并控制干湿程度。'),
     ).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: '骨架' }))
+
+    expect(screen.getByText('金属线骨架')).toBeInTheDocument()
+    expect(screen.getByText('支撑作品轮廓与受力结构')).toBeInTheDocument()
   })
 
   it('switches the active craft step and opens its image viewer', () => {
