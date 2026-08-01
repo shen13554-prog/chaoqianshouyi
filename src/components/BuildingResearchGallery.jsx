@@ -43,7 +43,9 @@ export default function BuildingResearchGallery({ images, activeId, onToggle }) 
           </div>
           <div className="building-research-detail__copy">
             <p>ARCHITECTURE RESEARCH</p>
-            <h4>{activeBuilding.name}</h4>
+            <h4 className={activeBuilding.id === 'guangji-tianhou' ? 'building-research-detail__title--long' : undefined}>
+              {activeBuilding.name}
+            </h4>
             <dl>
               <div>
                 <dt>建筑类型</dt>

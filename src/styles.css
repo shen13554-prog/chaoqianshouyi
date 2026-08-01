@@ -1522,6 +1522,13 @@ a {
   letter-spacing: 0.12em;
 }
 
+.building-research-detail__copy h4.building-research-detail__title--long {
+  width: calc(100% + 24px);
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
 .building-research-detail__copy dl,
 .building-research-detail__copy dd {
   margin: 0;
