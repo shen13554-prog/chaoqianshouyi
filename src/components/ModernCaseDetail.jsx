@@ -8,6 +8,14 @@ function ExhibitPlaceholder({ label }) {
   )
 }
 
+function ExhibitImage({ image }) {
+  return (
+    <figure className="modern-exhibit-image">
+      <img src={image.src} alt={image.alt} />
+    </figure>
+  )
+}
+
 function SourceGallery({ images }) {
   return (
     <div className="modern-source-gallery" aria-label="传统建筑来源">
@@ -90,7 +98,9 @@ export default function ModernCaseDetail({
           {sourceContent ?? (
             item.sourceImages?.length
               ? <SourceGallery images={item.sourceImages} />
-              : <ExhibitPlaceholder label="传统作品展示" />
+              : item.images?.source
+                ? <ExhibitImage image={item.images.source} />
+                : <ExhibitPlaceholder label="传统作品展示" />
           )}
         </article>
 
@@ -106,7 +116,9 @@ export default function ModernCaseDetail({
           </div>
           {item.extractions?.length
             ? <ExtractionGallery extractions={item.extractions} />
-            : <ExhibitPlaceholder label="纹样提取预览" />}
+            : item.images?.extraction
+              ? <ExhibitImage image={item.images.extraction} />
+              : <ExhibitPlaceholder label="纹样提取预览" />}
         </article>
 
         {showModernTranslation && (
@@ -117,7 +129,9 @@ export default function ModernCaseDetail({
                 <h3>现代设计应用</h3>
                 <span>{item.application}</span>
               </div>
-              <ExhibitPlaceholder label="现代应用预览" />
+              {item.images?.application
+                ? <ExhibitImage image={item.images.application} />
+                : <ExhibitPlaceholder label="现代应用预览" />}
             </article>
 
             <article className="modern-concept">

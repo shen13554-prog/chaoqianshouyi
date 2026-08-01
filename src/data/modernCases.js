@@ -88,7 +88,25 @@ export const modernCases = [
     number: '01',
     title: '日常新生',
     summary: '把花鸟纹样和瓷片肌理带回日常生活。',
+    coverImage: {
+      src: '/images/modern/daily/cover/codex-clipboard-43f2a14e-e715-4fee-b798-0baa470b7ebf.png',
+      alt: '日常新生案例入口',
+    },
     source: '传统嵌瓷中的牡丹、花鸟与卷草纹样，以及彩瓷碎片形成的细密质感。',
+    images: {
+      source: {
+        src: '/images/modern/daily/source/Snipaste_2026-08-01_21-38-15.png',
+        alt: '日常新生传统来源',
+      },
+      extraction: {
+        src: '/images/modern/daily/extraction/Snipaste_2026-08-01_21-39-17.png',
+        alt: '日常新生嵌瓷元素提取',
+      },
+      application: {
+        src: '/images/modern/daily/application/ChatGPT Image 2026年8月1日 21_46_29.png',
+        alt: '日常新生现代设计应用',
+      },
+    },
     elements: ['花瓣曲线', '碎片肌理', '低饱和朱红'],
     application: '将纹样比例缩小并简化，应用于茶器、香具、桌面摆件和文化礼品。',
     concept: '将传统花鸟纹样转化为可进入日常的器物语言。',
@@ -98,7 +116,25 @@ export const modernCases = [
     number: '02',
     title: '艺术跨界',
     summary: '以装置和跨媒介表达重新理解嵌瓷精神。',
+    coverImage: {
+      src: '/images/modern/art/cover/codex-clipboard-606ccd36-4fe4-44b7-b7d6-3c8669d24520.png',
+      alt: '艺术跨界案例入口',
+    },
     source: '传统屋脊瑞兽、戏曲人物和夸张动态所形成的叙事性嵌瓷场景。',
+    images: {
+      source: {
+        src: '/images/modern/art/source/Snipaste_2026-08-01_21-26-19.png',
+        alt: '艺术跨界传统来源',
+      },
+      extraction: {
+        src: '/images/modern/art/extraction/Snipaste_2026-08-01_21-28-23.png',
+        alt: '艺术跨界嵌瓷元素提取',
+      },
+      application: {
+        src: '/images/modern/art/application/ChatGPT Image 2026年8月1日 21_42_21.png',
+        alt: '艺术跨界现代设计应用',
+      },
+    },
     elements: ['动态剪影', '碎片反光', '叙事组合'],
     application: '把瓷片、光影与可拆装结构结合，形成展览装置、舞台视觉和跨媒介艺术作品。',
     concept: '不复制传统题材，而是延续手工拼合、材料再生与集体叙事的文化内核。',

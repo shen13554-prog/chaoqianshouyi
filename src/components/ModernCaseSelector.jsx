@@ -18,9 +18,15 @@ export default function ModernCaseSelector({ cases, activeId, onSelect }) {
             aria-label={`${item.number} ${item.title}`}
           >
             <span className="modern-case-card__number">{item.number}</span>
-            <span className="modern-case-card__placeholder" aria-hidden="true">
-              <i />
-            </span>
+            {item.coverImage ? (
+              <span className="modern-case-card__placeholder has-image">
+                <img src={item.coverImage.src} alt={item.coverImage.alt} />
+              </span>
+            ) : (
+              <span className="modern-case-card__placeholder" aria-hidden="true">
+                <i />
+              </span>
+            )}
             <strong>{item.title}</strong>
             <span className="modern-case-card__summary">{item.summary}</span>
             <span className="modern-case-card__action">进入案例</span>
