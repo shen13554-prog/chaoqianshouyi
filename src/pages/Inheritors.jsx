@@ -1,18 +1,16 @@
-import BasicPage from '../components/BasicPage'
-
-const images = [
-  { src: '/images/inheritors/chen-weiqin.png', alt: '传承人陈伟钦' },
-  { src: '/images/inheritors/lu-yigao.png', alt: '传承人卢艺高' },
-  { src: '/images/inheritors/xu-shaopeng.png', alt: '传承人许少鹏' },
-  { src: '/images/inheritors/xu-shaoxiong.png', alt: '传承人许少雄' },
-]
+import InheritorLineage from '../components/InheritorLineage'
 
 export default function Inheritors() {
   return (
-    <BasicPage
-      title="守艺传人"
-      intro="记录一代代嵌瓷艺人的实践与坚守，看见传统技艺延续至今的温度。"
-      images={images}
-    />
+    <div className="basic-page inheritors-page">
+      <section className="basic-page__heading">
+        <p className="basic-page__label">潮汕嵌瓷 · 传承谱系</p>
+        <h1>守艺传承</h1>
+        <span aria-hidden="true" />
+        <p>一条屋脊，连接数代匠人的坚守与创新</p>
+      </section>
+
+      <InheritorLineage />
+    </div>
   )
 }

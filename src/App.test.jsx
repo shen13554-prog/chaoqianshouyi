@@ -60,7 +60,7 @@ describe('site routes', () => {
     ['/materials', '嵌瓷之材'],
     ['/process', '匠心成艺'],
     ['/building', '建筑再生'],
-    ['/inheritors', '守艺传人'],
+    ['/inheritors', '守艺传承'],
     ['/gallery', '嵌瓷作品'],
     ['/modern', '潮艺新生'],
   ]
