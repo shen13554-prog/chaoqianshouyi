@@ -31,7 +31,26 @@ function ExtractionGallery({ extractions }) {
             <h4>{extraction.title}</h4>
             <span>{extraction.description}</span>
           </div>
-          <ExhibitPlaceholder label={extraction.title} />
+          {extraction.items?.length ? (
+            <ul className="modern-extraction-list">
+              {extraction.items.map((entry) => (
+                <li key={entry.label}>
+                  {entry.tone ? (
+                    <span
+                      className={`modern-extraction-swatch modern-extraction-swatch--${entry.tone}`}
+                      aria-hidden="true"
+                    />
+                  ) : null}
+                  <div>
+                    <strong>{entry.label}</strong>
+                    <span>{entry.meaning}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ExhibitPlaceholder label={extraction.title} />
+          )}
         </section>
       ))}
     </div>
@@ -41,6 +60,7 @@ function ExtractionGallery({ extractions }) {
 export default function ModernCaseDetail({
   item,
   detailRef,
+  sourceContent,
   showHeader = true,
   showModernTranslation = true,
 }) {
@@ -67,9 +87,11 @@ export default function ModernCaseDetail({
             <h3>传统来源</h3>
             <span>{item.source}</span>
           </div>
-          {item.sourceImages?.length
-            ? <SourceGallery images={item.sourceImages} />
-            : <ExhibitPlaceholder label="传统作品展示" />}
+          {sourceContent ?? (
+            item.sourceImages?.length
+              ? <SourceGallery images={item.sourceImages} />
+              : <ExhibitPlaceholder label="传统作品展示" />
+          )}
         </article>
 
         <article className={`modern-detail-block ${item.extractions?.length ? 'modern-detail-block--extraction' : 'modern-detail-block--reverse'}`}>
