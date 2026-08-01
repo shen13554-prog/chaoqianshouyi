@@ -1,19 +1,27 @@
-import BasicPage from '../components/BasicPage'
-
-const images = [
-  { src: '/images/history/roof-background.webp', alt: '传统嵌瓷屋脊' },
-  { src: '/images/history/broken-bowl.png', alt: '旧瓷片原料' },
-  { src: '/images/history/pottery.png', alt: '传统陶瓷器物' },
-  { src: '/images/history/trimming-shards.png', alt: '瓷片剪裁' },
-  { src: '/images/history/dragon-shape.png', alt: '嵌瓷龙形构件' },
-]
+import { useState } from 'react'
+import HistoryDetailCard from '../components/HistoryDetailCard'
+import HistoryScroll from '../components/HistoryScroll'
+import { historyTimeline } from '../data/historyTimeline'
 
 export default function History() {
+  const [activeId, setActiveId] = useState(historyTimeline[0].id)
+  const activeItem = historyTimeline.find((item) => item.id === activeId)
+
   return (
-    <BasicPage
-      title="潮嵌源流"
-      intro="探索潮汕嵌瓷从传统建筑装饰到现代文化传播的发展过程。"
-      images={images}
-    />
+    <div className="basic-page history-page">
+      <section className="basic-page__heading">
+        <p className="basic-page__label">潮汕嵌瓷 · 数字展陈</p>
+        <h1>潮嵌源流</h1>
+        <span aria-hidden="true" />
+        <p>从材料嵌饰的文化远源，到潮州建筑上的成熟技艺，再到当代非遗保护，循着时间长卷认识嵌瓷的发展轨迹。</p>
+      </section>
+
+      <HistoryScroll
+        items={historyTimeline}
+        activeId={activeId}
+        onSelect={setActiveId}
+      />
+      <HistoryDetailCard item={activeItem} />
+    </div>
   )
 }
