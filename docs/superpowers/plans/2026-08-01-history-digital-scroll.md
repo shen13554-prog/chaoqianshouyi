@@ -40,7 +40,7 @@ Expected: FAIL，因为当前 `History` 仍是 `BasicPage` 图片展示。
 
 - [ ] **Step 3: 建立数据文件**
 
-按殷商、战国、宋代、明代、清代、民国、新中国成立后、20世纪50—70年代、1990年代、2008年顺序定义 10 个节点。清代 `caseStudy` 固定为 `{ name: '从熙公祠', to: '/building', image: '/images/building/building-04.png' }`。
+按殷商、战国、宋代、明代、清代、民国、新中国成立后、20世纪50—70年代、1990年代、2008年顺序定义 10 个节点。清代 `caseStudy` 固定为 `{ name: '从熙公祠', to: '/building', image: '/images/building/building_04.png' }`。
 
 ### Task 2: 横向长卷与详情组件
 

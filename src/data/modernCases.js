@@ -7,7 +7,7 @@ export const architectureCase = {
     sourceImages: [
       {
         id: 'anji-wangmiao',
-        src: '/images/building/building-01.webp',
+        src: '/images/building/building_01.webp',
         name: '安济王庙',
         type: '潮汕传统庙宇建筑',
         location: '屋脊、檐部与正立面装饰区域',
@@ -15,7 +15,7 @@ export const architectureCase = {
       },
       {
         id: 'guangji-tianhou',
-        src: '/images/building/building-02.png',
+        src: '/images/building/building_02.png',
         name: '广济楼天后宫',
         type: '宫庙式公共文化建筑',
         location: '屋脊、山墙及入口上方装饰区域',
@@ -23,7 +23,7 @@ export const architectureCase = {
       },
       {
         id: 'guanyin-temple',
-        src: '/images/building/building-03.png',
+        src: '/images/building/building_03.png',
         name: '观音庙',
         type: '潮汕传统信仰建筑',
         location: '屋脊、檐口及墙面重点装饰区域',
@@ -31,7 +31,7 @@ export const architectureCase = {
       },
       {
         id: 'congxi-ancestral-hall',
-        src: '/images/building/building-04.png',
+        src: '/images/building/building_04.png',
         name: '从熙公祠',
         type: '潮汕传统祠堂建筑',
         location: '屋脊、山墙与门楼装饰区域',
@@ -89,21 +89,21 @@ export const modernCases = [
     title: '日常新生',
     summary: '把花鸟纹样和瓷片肌理带回日常生活。',
     coverImage: {
-      src: '/images/modern/daily/cover/codex-clipboard-43f2a14e-e715-4fee-b798-0baa470b7ebf.png',
+      src: '/images/modern/daily/cover/daily_cover.png',
       alt: '日常新生案例入口',
     },
     source: '传统嵌瓷中的牡丹、花鸟与卷草纹样，以及彩瓷碎片形成的细密质感。',
     images: {
       source: {
-        src: '/images/modern/daily/source/Snipaste_2026-08-01_21-38-15.png',
+        src: '/images/modern/daily/source/daily_source.png',
         alt: '日常新生传统来源',
       },
       extraction: {
-        src: '/images/modern/daily/extraction/Snipaste_2026-08-01_21-39-17.png',
+        src: '/images/modern/daily/extraction/daily_extraction.png',
         alt: '日常新生嵌瓷元素提取',
       },
       application: {
-        src: '/images/modern/daily/application/ChatGPT Image 2026年8月1日 21_46_29.png',
+        src: '/images/modern/daily/application/daily_application.png',
         alt: '日常新生现代设计应用',
       },
     },
@@ -117,21 +117,21 @@ export const modernCases = [
     title: '艺术跨界',
     summary: '以装置和跨媒介表达重新理解嵌瓷精神。',
     coverImage: {
-      src: '/images/modern/art/cover/codex-clipboard-606ccd36-4fe4-44b7-b7d6-3c8669d24520.png',
+      src: '/images/modern/art/cover/art_cover.png',
       alt: '艺术跨界案例入口',
     },
     source: '传统屋脊瑞兽、戏曲人物和夸张动态所形成的叙事性嵌瓷场景。',
     images: {
       source: {
-        src: '/images/modern/art/source/Snipaste_2026-08-01_21-26-19.png',
+        src: '/images/modern/art/source/art_source.png',
         alt: '艺术跨界传统来源',
       },
       extraction: {
-        src: '/images/modern/art/extraction/Snipaste_2026-08-01_21-28-23.png',
+        src: '/images/modern/art/extraction/art_extraction.png',
         alt: '艺术跨界嵌瓷元素提取',
       },
       application: {
-        src: '/images/modern/art/application/ChatGPT Image 2026年8月1日 21_42_21.png',
+        src: '/images/modern/art/application/art_application.png',
         alt: '艺术跨界现代设计应用',
       },
     },

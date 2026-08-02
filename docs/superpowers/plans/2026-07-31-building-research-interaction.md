@@ -12,7 +12,7 @@
 
 - 仅增强 `/building` 页面，不修改导航、路由或其他案例。
 - 保留现有米白宣纸背景、宋体、朱红细线、金色装饰和中式展陈布局。
-- 继续使用 `/images/building/building-01.webp`、`building-02.png`、`building-03.png`、`building-04.png`。
+- 继续使用 `/images/building/building_01.webp`、`building_02.png`、`building_03.png`、`building_04.png`。
 - 不新增页面、外部素材、弹窗、复杂动画或具体历史断言。
 - PC 端验收尺寸为 1280×720；不新增移动端工作。
 
@@ -103,7 +103,7 @@ Expected: FAIL，因为页面尚无建筑按钮和研究详情区域。
 sourceImages: [
   {
     id: 'anji-wangmiao',
-    src: '/images/building/building-01.webp',
+    src: '/images/building/building_01.webp',
     name: '安济王庙',
     type: '潮汕传统庙宇建筑',
     location: '屋脊、檐部与正立面装饰区域',
@@ -111,7 +111,7 @@ sourceImages: [
   },
   {
     id: 'guangji-tianhou',
-    src: '/images/building/building-02.png',
+    src: '/images/building/building_02.png',
     name: '广济楼天后宫',
     type: '宫庙式公共文化建筑',
     location: '屋脊、山墙及入口上方装饰区域',
@@ -119,7 +119,7 @@ sourceImages: [
   },
   {
     id: 'guanyin-temple',
-    src: '/images/building/building-03.png',
+    src: '/images/building/building_03.png',
     name: '观音庙',
     type: '潮汕传统信仰建筑',
     location: '屋脊、檐口及墙面重点装饰区域',
@@ -127,7 +127,7 @@ sourceImages: [
   },
   {
     id: 'congxi-ancestral-hall',
-    src: '/images/building/building-04.png',
+    src: '/images/building/building_04.png',
     name: '从熙公祠',
     type: '潮汕传统祠堂建筑',
     location: '屋脊、山墙与门楼装饰区域',

@@ -2,7 +2,7 @@ export const inheritors = [
   {
     id: 'chen-weiqin',
     name: '陈伟钦',
-    image: '/images/inheritors/chen-weiqin.png',
+    image: '/images/inheritors/chen_weiqin.png',
     portrait: {
       size: '76%',
       x: '3px',
@@ -22,7 +22,7 @@ export const inheritors = [
   {
     id: 'lu-zhigao',
     name: '卢芝高',
-    image: '/images/inheritors/lu-yigao.png',
+    image: '/images/inheritors/lu_yigao.png',
     portrait: {
       size: '84%',
       x: '0px',
@@ -42,7 +42,7 @@ export const inheritors = [
   {
     id: 'xu-shaopeng',
     name: '许少鹏',
-    image: '/images/inheritors/xu-shaopeng.png',
+    image: '/images/inheritors/xu_shaopeng.png',
     portrait: {
       size: '80%',
       x: '2px',
@@ -62,7 +62,7 @@ export const inheritors = [
   {
     id: 'xu-shaoxiong',
     name: '许少雄',
-    image: '/images/inheritors/xu-shaoxiong.png',
+    image: '/images/inheritors/xu_shaoxiong.png',
     portrait: {
       size: '80%',
       x: '0px',

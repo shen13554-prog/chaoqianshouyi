@@ -28,13 +28,13 @@ describe('modern design translation experience', () => {
     expect(dailyCase).toBeInTheDocument()
     expect(within(dailyCase).getByAltText('日常新生案例入口')).toHaveAttribute(
       'src',
-      '/images/modern/daily/cover/codex-clipboard-43f2a14e-e715-4fee-b798-0baa470b7ebf.png',
+      '/images/modern/daily/cover/daily_cover.png',
     )
     const artCase = screen.getByRole('button', { name: '02 艺术跨界' })
     expect(artCase).toBeInTheDocument()
     expect(within(artCase).getByAltText('艺术跨界案例入口')).toHaveAttribute(
       'src',
-      '/images/modern/art/cover/codex-clipboard-606ccd36-4fe4-44b7-b7d6-3c8669d24520.png',
+      '/images/modern/art/cover/art_cover.png',
     )
     expect(
       screen.getByRole('heading', { name: '两种转译路径' }),
@@ -50,15 +50,15 @@ describe('modern design translation experience', () => {
     expect(screen.getByText('花瓣曲线')).toBeInTheDocument()
     expect(screen.getByAltText('日常新生传统来源')).toHaveAttribute(
       'src',
-      '/images/modern/daily/source/Snipaste_2026-08-01_21-38-15.png',
+      '/images/modern/daily/source/daily_source.png',
     )
     expect(screen.getByAltText('日常新生嵌瓷元素提取')).toHaveAttribute(
       'src',
-      '/images/modern/daily/extraction/Snipaste_2026-08-01_21-39-17.png',
+      '/images/modern/daily/extraction/daily_extraction.png',
     )
     expect(screen.getByAltText('日常新生现代设计应用')).toHaveAttribute(
       'src',
-      '/images/modern/daily/application/ChatGPT Image 2026年8月1日 21_46_29.png',
+      '/images/modern/daily/application/daily_application.png',
     )
     expect(screen.getByRole('heading', { name: '现代设计应用' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '设计说明' })).toBeInTheDocument()
@@ -85,15 +85,15 @@ describe('modern design translation experience', () => {
     ).toBeInTheDocument()
     expect(screen.getByAltText('艺术跨界传统来源')).toHaveAttribute(
       'src',
-      '/images/modern/art/source/Snipaste_2026-08-01_21-26-19.png',
+      '/images/modern/art/source/art_source.png',
     )
     expect(screen.getByAltText('艺术跨界嵌瓷元素提取')).toHaveAttribute(
       'src',
-      '/images/modern/art/extraction/Snipaste_2026-08-01_21-28-23.png',
+      '/images/modern/art/extraction/art_extraction.png',
     )
     expect(screen.getByAltText('艺术跨界现代设计应用')).toHaveAttribute(
       'src',
-      '/images/modern/art/application/ChatGPT Image 2026年8月1日 21_42_21.png',
+      '/images/modern/art/application/art_application.png',
     )
     expect(
       screen.getByRole('heading', { name: '设计说明' }),

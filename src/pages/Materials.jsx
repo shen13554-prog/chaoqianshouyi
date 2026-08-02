@@ -1,11 +1,11 @@
 import BasicPage from '../components/BasicPage'
 
 const images = [
-  { src: '/images/materials/ceramic-shards.png', alt: '陶瓷碎片' },
-  { src: '/images/materials/colored-shards.png', alt: '彩色瓷片' },
-  { src: '/images/materials/glass-shards.png', alt: '玻璃片材' },
+  { src: '/images/materials/ceramic_shards.png', alt: '陶瓷碎片' },
+  { src: '/images/materials/colored_shards.png', alt: '彩色瓷片' },
+  { src: '/images/materials/glass_shards.png', alt: '玻璃片材' },
   { src: '/images/materials/lime.png', alt: '石灰材料' },
-  { src: '/images/materials/metal-wire.png', alt: '金属骨架线材' },
+  { src: '/images/materials/metal_wire.png', alt: '金属骨架线材' },
 ]
 
 export default function Materials() {

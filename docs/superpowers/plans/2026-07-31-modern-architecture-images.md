@@ -21,10 +21,10 @@
 ### Task 1: 接入建筑图片数据与条件展陈
 
 **Files:**
-- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building-01.webp` → `public/images/building/building-01.webp`
-- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building-02.png` → `public/images/building/building-02.png`
-- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building-03.png` → `public/images/building/building-03.png`
-- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building-04.png` → `public/images/building/building-04.png`
+- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building_01.webp` → `public/images/building/building_01.webp`
+- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building_02.png` → `public/images/building/building_02.png`
+- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building_03.png` → `public/images/building/building_03.png`
+- Copy: `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/building_04.png` → `public/images/building/building_04.png`
 - Modify: `src/data/modernCases.js`
 - Modify: `src/components/ModernCaseDetail.jsx`
 - Modify: `src/styles.css`
@@ -43,10 +43,10 @@ it('shows the four named source buildings for the architecture case', () => {
   render(<Modern />)
 
   const sourceImages = [
-    ['安济王庙', '/images/building/building-01.webp'],
-    ['广济楼天后宫', '/images/building/building-02.png'],
-    ['观音庙', '/images/building/building-03.png'],
-    ['从熙公祠', '/images/building/building-04.png'],
+    ['安济王庙', '/images/building/building_01.webp'],
+    ['广济楼天后宫', '/images/building/building_02.png'],
+    ['观音庙', '/images/building/building_03.png'],
+    ['从熙公祠', '/images/building/building_04.png'],
   ]
 
   sourceImages.forEach(([name, src]) => {
@@ -72,10 +72,10 @@ Expected: FAIL，因为案例 01 尚未渲染四张建筑图片。
 
 ```js
 sourceImages: [
-  { src: '/images/building/building-01.webp', name: '安济王庙' },
-  { src: '/images/building/building-02.png', name: '广济楼天后宫' },
-  { src: '/images/building/building-03.png', name: '观音庙' },
-  { src: '/images/building/building-04.png', name: '从熙公祠' },
+  { src: '/images/building/building_01.webp', name: '安济王庙' },
+  { src: '/images/building/building_02.png', name: '广济楼天后宫' },
+  { src: '/images/building/building_03.png', name: '观音庙' },
+  { src: '/images/building/building_04.png', name: '从熙公祠' },
 ],
 ```
 
@@ -133,6 +133,6 @@ Expected: Vite 生产构建成功。
 - [ ] **Step 10: 提交**
 
 ```bash
-git add public/images/building/building-01.webp public/images/building/building-02.png public/images/building/building-03.png public/images/building/building-04.png src/data/modernCases.js src/components/ModernCaseDetail.jsx src/styles.css src/pages/Modern.test.jsx docs/superpowers/plans/2026-07-31-modern-architecture-images.md
+git add public/images/building/building_01.webp public/images/building/building_02.png public/images/building/building_03.png public/images/building/building_04.png src/data/modernCases.js src/components/ModernCaseDetail.jsx src/styles.css src/pages/Modern.test.jsx docs/superpowers/plans/2026-07-31-modern-architecture-images.md
 git commit -m "v0.5 建筑再生传统来源图片接入"
 ```

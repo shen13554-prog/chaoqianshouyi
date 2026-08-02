@@ -21,10 +21,10 @@ describe('architecture regeneration detail', () => {
     ).toBeInTheDocument()
 
     const images = [
-      ['安济王庙', '/images/building/building-01.webp'],
-      ['广济楼天后宫', '/images/building/building-02.png'],
-      ['观音庙', '/images/building/building-03.png'],
-      ['从熙公祠', '/images/building/building-04.png'],
+      ['安济王庙', '/images/building/building_01.webp'],
+      ['广济楼天后宫', '/images/building/building_02.png'],
+      ['观音庙', '/images/building/building_03.png'],
+      ['从熙公祠', '/images/building/building_04.png'],
     ]
 
     images.forEach(([name, src]) => {

@@ -6,10 +6,10 @@
 
 ## 素材映射
 
-- `/images/building/building-01.webp`：安济王庙
-- `/images/building/building-02.png`：广济楼天后宫
-- `/images/building/building-03.png`：观音庙
-- `/images/building/building-04.png`：从熙公祠
+- `/images/building/building_01.webp`：安济王庙
+- `/images/building/building_02.png`：广济楼天后宫
+- `/images/building/building_03.png`：观音庙
+- `/images/building/building_04.png`：从熙公祠
 
 素材从 `E:/作品集/项目四/潮嵌素材文件/潮嵌素材文件/public/images/building/` 原样复制到当前项目的 `public/images/building/`。不修改图片内容、名称或格式。
 

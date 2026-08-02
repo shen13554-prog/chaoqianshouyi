@@ -5,7 +5,7 @@ import SectionTitle from '../components/SectionTitle'
 
 const explorations = [
   {
-    image: '/images/history/roof-background.webp',
+    image: '/images/history/roof_background.webp',
     title: '历史溯源',
     description: '追溯潮汕嵌瓷的发展历程。',
     to: '/history',
@@ -17,19 +17,19 @@ const explorations = [
     to: '/process',
   },
   {
-    image: '/images/building/anji-wangmiao.webp',
+    image: '/images/building/anji_wangmiao.webp',
     title: '建筑艺术',
     description: '了解嵌瓷在传统建筑中的艺术应用。',
     to: '/building',
   },
   {
-    image: '/images/inheritors/chen-weiqin.png',
+    image: '/images/inheritors/chen_weiqin.png',
     title: '传承人物',
     description: '记录非遗技艺传承者的故事。',
     to: '/inheritors',
   },
   {
-    image: '/images/modern/category-showcase.webp',
+    image: '/images/modern/category_showcase.webp',
     title: '潮艺新生',
     description: '探索传统技艺与当代设计融合。',
     to: '/modern',
@@ -38,17 +38,17 @@ const explorations = [
 
 const selectedWorks = [
   {
-    image: '/images/works/flat-inlay.png',
+    image: '/images/works/flat_inlay.png',
     title: '平嵌作品',
     description: '以细密瓷片铺陈图案，呈现平整而丰富的色彩层次。',
   },
   {
-    image: '/images/works/semi-relief-inlay.png',
+    image: '/images/works/semi_relief_inlay.png',
     title: '半浮雕嵌作品',
     description: '借由层叠与塑形，让纹样从建筑表面徐徐生长。',
   },
   {
-    image: '/images/works/three-dimensional-inlay.png',
+    image: '/images/works/three_dimensional_inlay.png',
     title: '立体嵌作品',
     description: '以立体骨架承托瓷片，塑造鲜明而生动的形态。',
   },
@@ -60,7 +60,7 @@ export default function Home() {
       <section className="hero section-container">
         <img
           className="hero__image"
-          src="/images/building/anji-wangmiao.webp"
+          src="/images/building/anji_wangmiao.webp"
           alt="安济王庙嵌瓷建筑"
         />
         <div className="hero__copy">
@@ -78,7 +78,7 @@ export default function Home() {
         />
         <div className="culture-intro__poster">
           <img
-            src="/images/intro/intro-scroll-poster.webp"
+            src="/images/intro/intro_scroll_poster.webp"
             alt="潮汕嵌瓷文化介绍长图"
           />
         </div>

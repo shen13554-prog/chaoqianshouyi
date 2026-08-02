@@ -95,11 +95,11 @@ describe('home page', () => {
     expect(hero.getByText('一片瓷片，承载百年潮韵。')).toBeInTheDocument()
     expect(screen.getByAltText('安济王庙嵌瓷建筑')).toHaveAttribute(
       'src',
-      '/images/building/anji-wangmiao.webp',
+      '/images/building/anji_wangmiao.webp',
     )
     expect(screen.getByAltText('潮汕嵌瓷文化介绍长图')).toHaveAttribute(
       'src',
-      '/images/intro/intro-scroll-poster.webp',
+      '/images/intro/intro_scroll_poster.webp',
     )
   })
 

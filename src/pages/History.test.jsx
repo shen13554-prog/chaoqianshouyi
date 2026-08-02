@@ -63,7 +63,7 @@ describe('digital history scroll', () => {
     ).toHaveAttribute('href', '/building')
     expect(screen.getByRole('img', { name: '从熙公祠' })).toHaveAttribute(
       'src',
-      '/images/building/building-04.png',
+      '/images/building/building_04.png',
     )
   })
 
@@ -85,7 +85,7 @@ describe('digital history scroll', () => {
       screen.getByRole('img', { name: '漳州东山关帝庙太子亭' }),
     ).toHaveAttribute(
       'src',
-      '/images/history/漳州东山关帝庙太子亭.png',
+      '/images/history/zhangzhou_dongshan_guandi_temple_pavilion.png',
     )
   })
 
@@ -95,19 +95,19 @@ describe('digital history scroll', () => {
     fireEvent.click(screen.getByRole('button', { name: '宋代' }))
     expect(screen.getByRole('img', { name: '青龙古庙' })).toHaveAttribute(
       'src',
-      '/images/history/青龙古庙.png',
+      '/images/history/qinglong_ancient_temple.png',
     )
 
     fireEvent.click(screen.getByRole('button', { name: '明代' }))
     expect(screen.getByRole('img', { name: '王氏大宗祠' })).toHaveAttribute(
       'src',
-      '/images/history/王氏大宗祠.png',
+      '/images/history/wang_ancestral_hall.png',
     )
 
     fireEvent.click(screen.getByRole('button', { name: '民国' }))
     expect(screen.getByRole('img', { name: '普宁林氏大宗祠' })).toHaveAttribute(
       'src',
-      '/images/history/普宁林氏大宗祠.png',
+      '/images/history/puning_lin_ancestral_hall.png',
     )
   })
 })

@@ -47,7 +47,7 @@ export const inheritors = [
   {
     id: 'chen-weiqin',
     name: '陈伟钦',
-    image: '/images/inheritors/chen-weiqin.png',
+    image: '/images/inheritors/chen_weiqin.png',
     position: { left: '12%', top: '54%' },
     marker: '一脉',
     details: {

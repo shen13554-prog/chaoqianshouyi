@@ -26,7 +26,7 @@ export const historyTimeline = [
     title: '潮州陶瓷与碎瓷再用',
     summary: '宋代潮州陶瓷生产发展，丰富的陶瓷器物和碎片为材料再利用提供了基础。',
     detail: '废旧或残损瓷器被重新观察和使用，碎瓷片的色彩、釉面与硬度逐渐成为建筑装饰可以利用的材料条件。',
-    image: '/images/history/青龙古庙.png',
+    image: '/images/history/qinglong_ancient_temple.png',
     imageAlt: '青龙古庙',
   },
   {
@@ -36,7 +36,7 @@ export const historyTimeline = [
     title: '彩瓷碎片进入建筑装饰',
     summary: '明代制陶业继续发展，彩釉器物品种增加，碎瓷片开始更广泛地用于建筑装饰。',
     detail: '工匠根据屋脊、山墙等位置的造型需要选择颜色、剪修瓷片，并通过排列与层叠形成具有立体感的装饰形象。',
-    image: '/images/history/王氏大宗祠.png',
+    image: '/images/history/wang_ancestral_hall.png',
     imageAlt: '王氏大宗祠',
   },
   {
@@ -46,12 +46,12 @@ export const historyTimeline = [
     title: '祠堂与民居营建推动嵌瓷成熟',
     summary: '祠堂、庙宇和传统民居的营建，为屋脊与山墙上的嵌瓷装饰提供了更广阔的应用空间。',
     detail: '题材、色彩和立体塑形进一步丰富，花鸟、瑞兽与人物故事共同构成潮州传统建筑鲜明的屋顶景观。',
-    image: '/images/history/普宁市里湖关帝庙.png',
+    image: '/images/history/puning_lihu_guandi_temple.png',
     imageAlt: '普宁市里湖关帝庙',
     caseStudy: {
       name: '从熙公祠',
       to: '/building',
-      image: '/images/building/building-04.png',
+      image: '/images/building/building_04.png',
       description: '从祠堂屋脊与门楼装饰观察嵌瓷在传统建筑礼序中的应用。',
     },
   },
@@ -62,7 +62,7 @@ export const historyTimeline = [
     title: '技艺随潮人迁徙传播',
     summary: '随着潮人迁徙与区域往来，嵌瓷工艺及其建筑装饰语言被带往更广阔的地区。',
     detail: '嵌瓷在异地祠庙和会馆建筑中延续，并在不同地域的材料条件与审美习惯中形成新的面貌。',
-    image: '/images/history/普宁林氏大宗祠.png',
+    image: '/images/history/puning_lin_ancestral_hall.png',
     imageAlt: '普宁林氏大宗祠',
   },
   {
@@ -72,7 +72,7 @@ export const historyTimeline = [
     title: '传统工艺在调整中延续',
     summary: '社会生活与建筑方式改变后，传统嵌瓷的应用环境和生产方式经历调整。',
     detail: '虽然传统建筑装饰需求有所变化，工匠仍通过修缮、制作与传习保存技法，使嵌瓷的文化价值逐渐得到重新认识。',
-    image: '/images/history/潮阳梅家祖祠嵌瓷.png',
+    image: '/images/history/chaoyang_mei_ancestral_hall_inlay.png',
     imageAlt: '潮阳梅家祖祠嵌瓷',
   },
   {
@@ -82,7 +82,7 @@ export const historyTimeline = [
     title: '社会变迁影响技艺传承',
     summary: '传统建筑装饰需求下降，部分嵌瓷作品、制作环境与工匠传承受到影响。',
     detail: '工艺在有限的修缮和民间实践中继续保存，为后来重新整理技法、恢复生产留下了重要基础。',
-    image: '/images/history/dragon-shape.png',
+    image: '/images/history/dragon_shape.png',
     imageAlt: '嵌瓷构件细节',
   },
   {
@@ -92,7 +92,7 @@ export const historyTimeline = [
     title: '嵌瓷进入城市公共文化',
     summary: '嵌瓷工艺被引入城市雕塑与公共文化建设，应用场景从传统建筑向外延伸。',
     detail: '传统材料语言与新的空间尺度相遇，嵌瓷开始承担地方文化识别、公共艺术表达与城市记忆展示等功能。',
-    image: '/images/history/trimming-shards.png',
+    image: '/images/history/trimming_shards.png',
     imageAlt: '嵌瓷材料加工',
   },
   {
@@ -102,7 +102,7 @@ export const historyTimeline = [
     title: '进入国家级非物质文化遗产名录',
     summary: '2008年6月14日，嵌瓷经国务院批准列入第二批国家级非物质文化遗产名录。',
     detail: '名录保护推动了技艺记录、传承人培养、公共展示与文化传播，嵌瓷由建筑装饰传统进一步进入当代非遗保护语境。',
-    image: '/images/history/漳州东山关帝庙太子亭.png',
+    image: '/images/history/zhangzhou_dongshan_guandi_temple_pavilion.png',
     imageAlt: '漳州东山关帝庙太子亭',
   },
 ]

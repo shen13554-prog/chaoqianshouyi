@@ -70,7 +70,7 @@ describe('inheritor lineage exhibition', () => {
     ).toBeInTheDocument()
     expect(screen.getAllByAltText('许少雄').at(-1)).toHaveAttribute(
       'src',
-      '/images/inheritors/xu-shaoxiong.png',
+      '/images/inheritors/xu_shaoxiong.png',
     )
   })
 
