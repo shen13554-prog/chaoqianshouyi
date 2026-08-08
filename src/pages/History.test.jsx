@@ -3,6 +3,7 @@ import {
   fireEvent,
   render,
   screen,
+  within,
 } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -37,11 +38,17 @@ function renderHistory() {
   )
 }
 
+function getTimelineNodes() {
+  return within(
+    screen.getByRole('region', { name: '潮州嵌瓷历史长卷' }),
+  ).getAllByRole('button')
+}
+
 describe('digital history scroll', () => {
   it('keeps edge nodes stable and smoothly centers only middle nodes', () => {
     renderHistory()
 
-    const nodes = screen.getAllByRole('button')
+    const nodes = getTimelineNodes()
     document.querySelector('.history-detail').parentElement.scrollIntoView = vi.fn()
     expect(scrollIntoView).not.toHaveBeenCalled()
 
@@ -86,7 +93,7 @@ describe('digital history scroll', () => {
 
     expect(detailCardScrollIntoView).not.toHaveBeenCalled()
 
-    fireEvent.click(screen.getAllByRole('button')[9])
+    fireEvent.click(getTimelineNodes()[9])
 
     expect(detailCardScrollIntoView).toHaveBeenCalledWith({
       behavior: 'smooth',
@@ -102,7 +109,7 @@ describe('digital history scroll', () => {
       frameCallbacks.push(callback)
       return frameCallbacks.length
     })
-    const nodes = screen.getAllByRole('button')
+    const nodes = getTimelineNodes()
     const detailCardScrollIntoView = vi.fn()
     document.querySelector('.history-detail').parentElement.scrollIntoView =
       detailCardScrollIntoView
@@ -125,6 +132,31 @@ describe('digital history scroll', () => {
     })
   })
 
+  it('pages through detail cards and keeps the timeline selection in sync', () => {
+    renderHistory()
+
+    expect(
+      screen.queryByRole('button', { name: '上一页' }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '下一页' })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+
+    expect(getTimelineNodes()[1]).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '下一页' })).toBeInTheDocument()
+
+    for (let index = 1; index < 9; index += 1) {
+      fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+    }
+
+    expect(getTimelineNodes()[9]).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: '下一页' }),
+    ).not.toBeInTheDocument()
+  })
+
   it('renders ten historical nodes with the earliest period selected', () => {
     renderHistory()
 
@@ -134,7 +166,7 @@ describe('digital history scroll', () => {
     expect(
       screen.getByRole('region', { name: '潮州嵌瓷历史长卷' }),
     ).toBeInTheDocument()
-    expect(screen.getAllByRole('button')).toHaveLength(10)
+    expect(getTimelineNodes()).toHaveLength(10)
     expect(screen.getByRole('button', { name: '殷商' })).toHaveAttribute(
       'aria-pressed',
       'true',

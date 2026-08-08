@@ -247,6 +247,7 @@ a {
 }
 
 .culture-intro__poster {
+  position: relative;
   width: 860px;
   margin-inline: auto;
   padding: 14px;
@@ -255,9 +256,157 @@ a {
   box-shadow: 0 24px 70px rgba(68, 49, 31, 0.08);
 }
 
-.culture-intro__poster img {
+.culture-intro__poster > img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: auto;
+}
+
+.poster-hotspot {
+  position: absolute;
+  z-index: 2;
+  cursor: default;
+  background: transparent;
+  outline: 1px solid transparent;
+  outline-offset: 3px;
+  transition: background-color 180ms ease, outline-color 180ms ease;
+}
+
+.poster-hotspot.is-active {
+  z-index: 5;
+  background: rgba(181, 151, 93, 0.08);
+  outline-color: rgba(181, 151, 93, 0.62);
+}
+
+.poster-hotspot__connector {
+  position: absolute;
+  top: calc(50% - 13px);
+  width: 26px;
+  height: 26px;
+}
+
+.poster-hotspot__connector::before {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--vermilion);
+}
+
+.poster-hotspot__connector::after {
+  position: absolute;
+  top: calc(50% - 3px);
+  width: 7px;
+  height: 7px;
+  content: "";
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.poster-hotspot--left .poster-hotspot__connector {
+  left: 100%;
+}
+
+.poster-hotspot--left .poster-hotspot__connector::after {
+  right: -3px;
+}
+
+.poster-hotspot--right .poster-hotspot__connector {
+  right: 100%;
+}
+
+.poster-hotspot--right .poster-hotspot__connector::after {
+  left: -3px;
+}
+
+.poster-hotspot__card {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  width: 310px;
+  margin: 0;
+  padding: 22px 24px;
+  color: var(--brown);
+  border: 1px solid var(--gold-soft);
+  background: rgba(248, 243, 233, 0.97);
+  box-shadow: 0 16px 42px rgba(68, 49, 31, 0.16);
+  transform: translateY(-50%);
+  animation: poster-card-in 180ms ease-out both;
+}
+
+.poster-hotspot--left .poster-hotspot__card {
+  left: calc(100% + 26px);
+}
+
+.poster-hotspot--right .poster-hotspot__card {
+  right: calc(100% + 26px);
+}
+
+.poster-hotspot__card > span {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--vermilion);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+}
+
+.poster-hotspot__card h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.poster-hotspot__card p {
+  margin: 13px 0 0;
+  color: var(--brown);
+  font-size: 14px;
+  line-height: 1.85;
+  letter-spacing: 0.04em;
+}
+
+.poster-hotspot__card ul {
+  display: grid;
+  gap: 7px;
+  margin: 16px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--gold-soft);
+  list-style: none;
+}
+
+.poster-hotspot__card li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.poster-hotspot__card li::before {
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 6px;
+  height: 1px;
+  content: "";
+  background: var(--vermilion);
+}
+
+@keyframes poster-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
 }
 
 .culture-intro__text {
@@ -1167,6 +1316,37 @@ a {
   margin-top: 74px;
   border: 1px solid var(--gold-soft);
   background: rgba(255, 252, 246, 0.42);
+  animation: history-detail-fade-in 300ms ease both;
+}
+
+.history-detail-pagination {
+  display: flex;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 14px 24px;
+  border: 1px solid var(--gold-soft);
+  border-top: 0;
+  background: rgba(255, 252, 246, 0.42);
+}
+
+.history-detail-pagination button {
+  padding: 8px 18px;
+  color: var(--vermilion);
+  font: inherit;
+  letter-spacing: 0.12em;
+  background: transparent;
+  border: 1px solid var(--gold-soft);
+  cursor: pointer;
+}
+
+@keyframes history-detail-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .history-detail__visual {
@@ -1877,6 +2057,7 @@ a {
   height: 100%;
   min-height: 0;
   object-fit: contain;
+  object-position: center;
 }
 
 .image-lightbox__content button {

@@ -3,6 +3,7 @@ import ImageLightbox from '../components/ImageLightbox'
 import ProcessDeconstruction from '../components/ProcessDeconstruction'
 import ProcessTimeline from '../components/ProcessTimeline'
 import { processLayers, processSteps } from '../data/processExperience'
+import completeWorkImage from '../assets/images/process/complete-work.jpg'
 
 export default function Process() {
   const [experienceStarted, setExperienceStarted] = useState(false)
@@ -50,13 +51,13 @@ export default function Process() {
           type="button"
           className="process-hero__artwork"
           onClick={() => openLightbox(
-            '/images/works/three_dimensional_inlay.png',
+            completeWorkImage,
             '完整嵌瓷作品',
           )}
           aria-label="放大查看完整嵌瓷作品"
         >
           <img
-            src="/images/works/three_dimensional_inlay.png"
+            src={completeWorkImage}
             alt="龙形立体嵌瓷完整作品"
           />
           <span>完整作品 · 点击查看</span>

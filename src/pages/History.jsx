@@ -4,18 +4,22 @@ import HistoryScroll from '../components/HistoryScroll'
 import { historyTimeline } from '../data/historyTimeline'
 
 export default function History() {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const activeCardRef = useRef(null)
-  const activeItem = historyTimeline[activeIndex]
+  const currentItem = historyTimeline[currentIndex]
 
   const handleNodeClick = (index) => {
-    setActiveIndex(index)
+    setCurrentIndex(index)
     requestAnimationFrame(() => {
       activeCardRef.current?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
     })
+  }
+
+  const handlePageChange = (index) => {
+    setCurrentIndex(index)
   }
 
   return (
@@ -29,11 +33,33 @@ export default function History() {
 
       <HistoryScroll
         items={historyTimeline}
-        activeIndex={activeIndex}
+        activeIndex={currentIndex}
         onSelect={handleNodeClick}
       />
       <div ref={activeCardRef}>
-        <HistoryDetailCard item={activeItem} />
+        <HistoryDetailCard item={currentItem} key={currentIndex} />
+        <nav className="history-detail-pagination" aria-label="历史资料卡分页">
+          <span>
+            {currentIndex > 0 ? (
+              <button
+                type="button"
+                onClick={() => handlePageChange(currentIndex - 1)}
+              >
+                上一页
+              </button>
+            ) : null}
+          </span>
+          <span>
+            {currentIndex < historyTimeline.length - 1 ? (
+              <button
+                type="button"
+                onClick={() => handlePageChange(currentIndex + 1)}
+              >
+                下一页
+              </button>
+            ) : null}
+          </span>
+        </nav>
       </div>
     </div>
   )

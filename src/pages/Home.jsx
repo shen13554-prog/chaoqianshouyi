@@ -1,7 +1,68 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ExploreCard from '../components/ExploreCard'
 import ImageCard from '../components/ImageCard'
+import PosterHotspot from '../components/PosterHotspot'
 import SectionTitle from '../components/SectionTitle'
+
+const posterHotspots = [
+  {
+    id: 'introduction',
+    title: '嵌瓷介绍',
+    summary: '以彩釉瓷片剪裁、组合并嵌贴成建筑装饰图像。',
+    points: ['又称聚饶、粘瓷、扣饶', '常见人物、花卉与飞禽走兽题材', '多用于屋顶、墙壁等区域'],
+    side: 'left',
+    area: { left: '1.8%', top: '10.5%', width: '32%', height: '8.5%' },
+  },
+  {
+    id: 'process-introduction',
+    title: '工艺介绍',
+    summary: '从造型基础到瓷片嵌贴，以多道手工环节形成完整画面。',
+    points: ['塑胚胎', '剪取瓷片', '镶嵌瓷片', '综合调整'],
+    side: 'left',
+    area: { left: '1.8%', top: '25.8%', width: '23%', height: '14.8%' },
+  },
+  {
+    id: 'core-features',
+    title: '核心特点',
+    summary: '瓷片釉色与立体结构共同构成嵌瓷鲜明的视觉辨识度。',
+    points: ['色彩绚丽', '质地坚固', '立体感强', '变废为宝'],
+    side: 'left',
+    area: { left: '1.8%', top: '42.2%', width: '23%', height: '12.5%' },
+  },
+  {
+    id: 'regional-distribution',
+    title: '地区分布',
+    summary: '嵌瓷随地域文化形成不同的色彩、题材与装饰风格。',
+    points: ['广东省', '福建省', '海南省', '台湾省'],
+    side: 'left',
+    area: { left: '1.8%', top: '71%', width: '35%', height: '24%' },
+  },
+  {
+    id: 'landmarks',
+    title: '标志建筑',
+    summary: '传统庙宇与祠堂屋脊集中呈现嵌瓷的建筑装饰语言。',
+    points: ['安济王庙', '广济楼天后宫', '观音庙', '从熙公祠'],
+    side: 'right',
+    area: { left: '72.8%', top: '4.8%', width: '14.7%', height: '13%' },
+  },
+  {
+    id: 'material-process',
+    title: '材料制作流程',
+    summary: '多种基础材料经过处理、配比与熟化，形成嵌贴所需灰浆。',
+    points: ['贝壳灰与石灰', '细沙与浸泡稻草', '红糖浆', '草根粗灰'],
+    side: 'right',
+    area: { left: '77.5%', top: '20%', width: '11%', height: '41%' },
+  },
+  {
+    id: 'craft-steps',
+    title: '工艺步骤',
+    summary: '海报以纵向图示呈现材料由处理到灰浆调和的连续步骤。',
+    points: ['烧制与浸泡', '分次加入', '过滤与搅拌', '配比调和'],
+    side: 'right',
+    area: { left: '89%', top: '20%', width: '9.5%', height: '74%' },
+  },
+]
 
 const explorations = [
   {
@@ -55,6 +116,8 @@ const selectedWorks = [
 ]
 
 export default function Home() {
+  const [activeHotspot, setActiveHotspot] = useState(null)
+
   return (
     <>
       <section className="hero section-container">
@@ -81,6 +144,14 @@ export default function Home() {
             src="/images/intro/intro_scroll_poster.webp"
             alt="潮汕嵌瓷文化介绍长图"
           />
+          {posterHotspots.map((hotspot) => (
+            <PosterHotspot
+              key={hotspot.id}
+              hotspot={hotspot}
+              isActive={activeHotspot === hotspot.id}
+              onActivate={setActiveHotspot}
+            />
+          ))}
         </div>
         <p className="culture-intro__text">
           潮汕嵌瓷以废旧瓷片为材料，

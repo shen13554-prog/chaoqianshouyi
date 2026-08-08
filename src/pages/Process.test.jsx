@@ -24,6 +24,22 @@ function renderProcess() {
 afterEach(cleanup)
 
 describe('process digital experience', () => {
+  it('uses the complete roof work in the hero and image viewer', () => {
+    renderProcess()
+
+    const completeWork = screen.getByAltText('龙形立体嵌瓷完整作品')
+    expect(completeWork.getAttribute('src')).toContain('complete-work.jpg')
+
+    fireEvent.click(
+      screen.getByRole('button', { name: '放大查看完整嵌瓷作品' }),
+    )
+
+    const viewer = screen.getByRole('dialog', { name: '完整嵌瓷作品' })
+    expect(viewer.querySelector('img').getAttribute('src')).toContain(
+      'complete-work.jpg',
+    )
+  })
+
   it('starts the decomposition experience from the complete work', () => {
     renderProcess()
 
