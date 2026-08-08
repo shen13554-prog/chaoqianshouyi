@@ -31,29 +31,34 @@ function renderHistory() {
 }
 
 describe('digital history scroll', () => {
-  it('smoothly centers the first, middle, and last nodes when clicked', () => {
+  it('keeps edge nodes stable and smoothly centers only middle nodes', () => {
     renderHistory()
 
     const nodes = screen.getAllByRole('button')
     expect(scrollIntoView).not.toHaveBeenCalled()
 
-    fireEvent.click(nodes[4])
-    expect(nodes[4]).toHaveAttribute('aria-pressed', 'true')
-    expect(nodes[4]).toHaveClass('is-active')
+    fireEvent.click(nodes[0])
+    fireEvent.click(nodes[2])
+    expect(nodes[2]).toHaveAttribute('aria-pressed', 'true')
+    expect(scrollIntoView).not.toHaveBeenCalled()
+
+    fireEvent.click(nodes[3])
+    expect(nodes[3]).toHaveAttribute('aria-pressed', 'true')
+    expect(nodes[3]).toHaveClass('is-active')
     expect(scrollIntoView).toHaveBeenLastCalledWith({
       behavior: 'smooth',
-      block: 'nearest',
+      block: 'center',
       inline: 'center',
     })
 
+    fireEvent.click(nodes[6])
+    expect(scrollIntoView).toHaveBeenCalledTimes(2)
+
+    fireEvent.click(nodes[7])
     fireEvent.click(nodes[9])
     expect(nodes[9]).toHaveAttribute('aria-pressed', 'true')
-    expect(nodes[4]).not.toHaveClass('is-active')
-
-    fireEvent.click(nodes[0])
-    expect(nodes[0]).toHaveAttribute('aria-pressed', 'true')
-    expect(nodes[9]).not.toHaveClass('is-active')
-    expect(scrollIntoView).toHaveBeenCalledTimes(3)
+    expect(nodes[6]).not.toHaveClass('is-active')
+    expect(scrollIntoView).toHaveBeenCalledTimes(2)
   })
 
   it('renders ten historical nodes with the earliest period selected', () => {

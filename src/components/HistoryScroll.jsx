@@ -14,9 +14,12 @@ export default function HistoryScroll({ items, activeIndex, onSelect }) {
 
   const handleSelect = (index) => {
     onSelect(index)
+
+    if (index < 3 || index >= items.length - 3) return
+
     nodeRefs.current[index]?.scrollIntoView({
       behavior: 'smooth',
-      block: 'nearest',
+      block: 'center',
       inline: 'center',
     })
   }

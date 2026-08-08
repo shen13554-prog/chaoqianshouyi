@@ -997,20 +997,20 @@ a {
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
-  scrollbar-color: var(--vermilion) rgba(181, 151, 93, 0.18);
+  scrollbar-color: rgba(157, 63, 53, 0.28) rgba(181, 151, 93, 0.08);
   scrollbar-width: thin;
 }
 
 .history-scroll__viewport::-webkit-scrollbar {
-  height: 8px;
+  height: 4px;
 }
 
 .history-scroll__viewport::-webkit-scrollbar-track {
-  background: rgba(181, 151, 93, 0.18);
+  background: rgba(181, 151, 93, 0.08);
 }
 
 .history-scroll__viewport::-webkit-scrollbar-thumb {
-  background: var(--vermilion);
+  background: rgba(157, 63, 53, 0.28);
 }
 
 .history-scroll__track {
@@ -1028,7 +1028,7 @@ a {
   position: absolute;
   top: 244px;
   right: calc(50px + var(--history-edge-gutter));
-  left: calc(50px + var(--history-edge-gutter));
+  left: 0;
   height: 2px;
   content: "";
   background: linear-gradient(90deg, var(--gold), #667c62 48%, var(--vermilion));
