@@ -1,14 +1,26 @@
 import {
+  act,
   cleanup,
   fireEvent,
   render,
   screen,
   within,
 } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { inheritors } from '../data/inheritors'
 import Inheritors from './Inheritors'
 
-afterEach(cleanup)
+const scrollIntoView = vi.fn()
+
+beforeEach(() => {
+  scrollIntoView.mockClear()
+  Element.prototype.scrollIntoView = scrollIntoView
+})
+
+afterEach(() => {
+  cleanup()
+  vi.useRealTimers()
+})
 
 describe('inheritor lineage exhibition', () => {
   it('renders the lineage heading and four accessible portrait nodes', () => {
@@ -49,7 +61,7 @@ describe('inheritor lineage exhibition', () => {
         expect(within(detail).getByText(label)).toBeInTheDocument()
       },
     )
-    expect(within(detail).getAllByText('待补充')).toHaveLength(5)
+    expect(within(detail).getAllByRole('definition')).toHaveLength(5)
   })
 
   it('switches the active node and detail when a portrait is clicked', () => {
@@ -74,6 +86,37 @@ describe('inheritor lineage exhibition', () => {
     )
   })
 
+  it('centers and briefly highlights each id-linked archive when clicked', () => {
+    vi.useFakeTimers()
+    render(<Inheritors />)
+
+    ;[
+      ['陈伟钦', 'chen-weiqin'],
+      ['卢芝高', 'lu-zhigao'],
+      ['许少鹏', 'xu-shaopeng'],
+      ['许少雄', 'xu-shaoxiong'],
+    ].forEach(([name, id]) => {
+      const button = screen.getByRole('button', { name })
+      fireEvent.click(button)
+
+      const detail = screen.getByRole('region', { name: `${name}人物档案` })
+      expect(button).toHaveAttribute('aria-controls', `inheritor-detail-${id}`)
+      expect(detail).toHaveAttribute('id', `inheritor-detail-${id}`)
+      expect(detail).toHaveClass('is-highlighted')
+      expect(scrollIntoView).toHaveBeenLastCalledWith({
+        behavior: 'smooth',
+        block: 'center',
+      })
+
+      act(() => {
+        vi.advanceTimersByTime(1000)
+      })
+      expect(detail).not.toHaveClass('is-highlighted')
+    })
+
+    expect(scrollIntoView).toHaveBeenCalledTimes(4)
+  })
+
   it('applies individual framing settings to each circular portrait', () => {
     render(<Inheritors />)
 
@@ -90,5 +133,71 @@ describe('inheritor lineage exhibition', () => {
     expect(xuShaopengMedia).toBeInTheDocument()
     expect(xuShaopengMedia.style.getPropertyValue('--portrait-size')).toBe('80%')
     expect(xuShaopengMedia.style.getPropertyValue('--portrait-y')).toBe('2px')
+  })
+
+  it('pages through archive details and hides controls at the boundaries', () => {
+    render(<Inheritors />)
+
+    expect(screen.queryByRole('button', { name: '上一页' })).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+
+    expect(
+      screen.getByRole('button', { name: inheritors[1].name }),
+    ).toHaveAttribute('aria-pressed', 'true')
+    expect(
+      screen.getByRole('region', {
+        name: `${inheritors[1].name}人物档案`,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '下一页' })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+
+    expect(
+      screen.getByRole('button', { name: inheritors[3].name }),
+    ).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '下一页' })).not.toBeInTheDocument()
+  })
+
+  it('cross-slides archive details in the pagination direction for 400ms', () => {
+    vi.useFakeTimers()
+    render(<Inheritors />)
+
+    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+
+    const firstOutgoing = document.querySelector(
+      `[aria-label="${inheritors[0].name}人物档案"]`,
+    )
+    const secondIncoming = screen.getByRole('region', {
+      name: `${inheritors[1].name}人物档案`,
+    })
+    expect(firstOutgoing).toHaveClass('is-exiting-to-left')
+    expect(firstOutgoing).toHaveAttribute('aria-hidden', 'true')
+    expect(secondIncoming).toHaveClass('is-entering-from-right')
+
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+    expect(
+      document.querySelector(
+        `[aria-label="${inheritors[0].name}人物档案"]`,
+      ),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: '上一页' }))
+
+    expect(
+      document.querySelector(
+        `[aria-label="${inheritors[1].name}人物档案"]`,
+      ),
+    ).toHaveClass('is-exiting-to-right')
+    expect(
+      screen.getByRole('region', {
+        name: `${inheritors[0].name}人物档案`,
+      }),
+    ).toHaveClass('is-entering-from-left')
   })
 })

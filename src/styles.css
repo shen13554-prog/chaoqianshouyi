@@ -2937,16 +2937,52 @@ a {
   border-color: var(--gold);
 }
 
+.inheritor-detail-stage {
+  display: grid;
+  margin-top: 84px;
+  overflow: hidden;
+}
+
 .inheritor-detail {
+  grid-area: 1 / 1;
   display: grid;
   grid-template-columns: 47% 53%;
   min-height: 500px;
-  margin-top: 84px;
   overflow: hidden;
   border-top: 1px solid var(--gold);
   border-bottom: 1px solid var(--gold-soft);
   background: rgba(255, 253, 247, 0.38);
   animation: inheritor-detail-enter 260ms ease both;
+  transition: background-color 240ms ease, box-shadow 240ms ease;
+}
+
+.inheritor-detail.is-exiting-to-left {
+  z-index: 1;
+  pointer-events: none;
+  animation: inheritor-detail-exit-left 400ms ease both;
+}
+
+.inheritor-detail.is-exiting-to-right {
+  z-index: 1;
+  pointer-events: none;
+  animation: inheritor-detail-exit-right 400ms ease both;
+}
+
+.inheritor-detail.is-entering-from-left {
+  z-index: 2;
+  animation: inheritor-detail-enter-left 400ms ease both;
+}
+
+.inheritor-detail.is-entering-from-right {
+  z-index: 2;
+  animation: inheritor-detail-enter-right 400ms ease both;
+}
+
+.inheritor-detail.is-highlighted {
+  background-color: rgba(181, 151, 93, 0.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(157, 63, 53, 0.34),
+    0 12px 32px rgba(76, 52, 40, 0.1);
 }
 
 .inheritor-detail__visual {
@@ -3038,6 +3074,25 @@ a {
   letter-spacing: 0.08em;
 }
 
+.inheritor-detail__pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(181, 151, 93, 0.28);
+}
+
+.inheritor-detail__pagination button {
+  padding: 8px 0 5px;
+  color: var(--vermilion);
+  font: inherit;
+  letter-spacing: 0.12em;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--gold);
+  cursor: pointer;
+}
+
 @keyframes inheritor-detail-enter {
   from {
     opacity: 0.45;
@@ -3047,5 +3102,33 @@ a {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes inheritor-detail-exit-left {
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes inheritor-detail-exit-right {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes inheritor-detail-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes inheritor-detail-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
   }
 }

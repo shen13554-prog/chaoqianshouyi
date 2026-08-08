@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { inheritors } from '../data/inheritors'
 
 const detailFields = [
@@ -9,10 +9,122 @@ const detailFields = [
   ['传承贡献', 'contribution'],
 ]
 
+function InheritorDetailCard({
+  activeIndex,
+  className = '',
+  detailRef,
+  inheritor,
+  isHighlighted = false,
+  isOutgoing = false,
+  onPageChange,
+}) {
+  return (
+    <article
+      className={`inheritor-detail${isHighlighted ? ' is-highlighted' : ''}${className ? ` ${className}` : ''}`}
+      id={isOutgoing ? undefined : `inheritor-detail-${inheritor.id}`}
+      ref={detailRef}
+      role="region"
+      aria-label={`${inheritor.name}人物档案`}
+      aria-hidden={isOutgoing ? 'true' : undefined}
+      aria-live={isOutgoing ? undefined : 'polite'}
+    >
+      <div className="inheritor-detail__visual">
+        <span className="inheritor-detail__seal" aria-hidden="true">
+          守艺
+        </span>
+        <img src={inheritor.image} alt={inheritor.name} />
+      </div>
+
+      <div className="inheritor-detail__content">
+        <p className="inheritor-detail__eyebrow">非遗人物数字档案</p>
+        <h2>{inheritor.name}</h2>
+        <span className="inheritor-detail__rule" aria-hidden="true" />
+
+        <dl>
+          {detailFields.map(([label, key]) => (
+            <div key={key}>
+              <dt>{label}</dt>
+              <dd>{inheritor.details[key]}</dd>
+            </div>
+          ))}
+        </dl>
+
+        {onPageChange ? (
+          <nav className="inheritor-detail__pagination" aria-label="传承人物资料分页">
+            {activeIndex > 0 ? (
+              <button
+                type="button"
+                onClick={() => onPageChange(activeIndex - 1)}
+              >
+                上一页
+              </button>
+            ) : <span />}
+            {activeIndex < inheritors.length - 1 ? (
+              <button
+                type="button"
+                onClick={() => onPageChange(activeIndex + 1)}
+              >
+                下一页
+              </button>
+            ) : null}
+          </nav>
+        ) : null}
+      </div>
+    </article>
+  )
+}
+
 export default function InheritorLineage() {
   const [activeId, setActiveId] = useState(inheritors[0].id)
+  const [interactionVersion, setInteractionVersion] = useState(0)
+  const [isHighlighted, setIsHighlighted] = useState(false)
+  const [transition, setTransition] = useState(null)
+  const detailRef = useRef(null)
+  const transitionTimerRef = useRef(null)
   const activeInheritor =
     inheritors.find((inheritor) => inheritor.id === activeId) ?? inheritors[0]
+  const activeIndex = inheritors.findIndex(
+    (inheritor) => inheritor.id === activeInheritor.id,
+  )
+
+  useEffect(() => {
+    if (interactionVersion === 0) return undefined
+
+    detailRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+    setIsHighlighted(true)
+
+    const highlightTimer = window.setTimeout(() => {
+      setIsHighlighted(false)
+    }, 1000)
+
+    return () => window.clearTimeout(highlightTimer)
+  }, [interactionVersion])
+
+  useEffect(() => () => {
+    window.clearTimeout(transitionTimerRef.current)
+  }, [])
+
+  const handleSelect = (inheritorId) => {
+    window.clearTimeout(transitionTimerRef.current)
+    setTransition(null)
+    setActiveId(inheritorId)
+    setInteractionVersion((version) => version + 1)
+  }
+
+  const handlePageChange = (nextIndex) => {
+    const direction = nextIndex < activeIndex ? 'previous' : 'next'
+
+    window.clearTimeout(transitionTimerRef.current)
+    setTransition({ direction, outgoing: activeInheritor })
+    setActiveId(inheritors[nextIndex].id)
+    setInteractionVersion((version) => version + 1)
+    transitionTimerRef.current = window.setTimeout(() => {
+      setTransition(null)
+    }, 400)
+  }
 
   return (
     <section className="inheritor-lineage" aria-label="嵌瓷技艺传承谱系">
@@ -57,7 +169,8 @@ export default function InheritorLineage() {
                 type="button"
                 aria-label={inheritor.name}
                 aria-pressed={isActive}
-                onClick={() => setActiveId(inheritor.id)}
+                aria-controls={`inheritor-detail-${inheritor.id}`}
+                onClick={() => handleSelect(inheritor.id)}
               >
                 <span className="inheritor-node__portrait">
                   <span
@@ -84,35 +197,30 @@ export default function InheritorLineage() {
         })}
       </div>
 
-      <article
-        className="inheritor-detail"
-        key={activeInheritor.id}
-        role="region"
-        aria-label={`${activeInheritor.name}人物档案`}
-        aria-live="polite"
-      >
-        <div className="inheritor-detail__visual">
-          <span className="inheritor-detail__seal" aria-hidden="true">
-            守艺
-          </span>
-          <img src={activeInheritor.image} alt={activeInheritor.name} />
-        </div>
-
-        <div className="inheritor-detail__content">
-          <p className="inheritor-detail__eyebrow">非遗人物数字档案</p>
-          <h2>{activeInheritor.name}</h2>
-          <span className="inheritor-detail__rule" aria-hidden="true" />
-
-          <dl>
-            {detailFields.map(([label, key]) => (
-              <div key={key}>
-                <dt>{label}</dt>
-                <dd>{activeInheritor.details[key]}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </article>
+      <div className="inheritor-detail-stage">
+        {transition ? (
+          <InheritorDetailCard
+            className={transition.direction === 'next'
+              ? 'is-exiting-to-left'
+              : 'is-exiting-to-right'}
+            inheritor={transition.outgoing}
+            isOutgoing
+          />
+        ) : null}
+        <InheritorDetailCard
+          activeIndex={activeIndex}
+          className={transition
+            ? transition.direction === 'next'
+              ? 'is-entering-from-right'
+              : 'is-entering-from-left'
+            : ''}
+          detailRef={detailRef}
+          inheritor={activeInheritor}
+          isHighlighted={isHighlighted}
+          key={activeInheritor.id}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </section>
   )
 }
