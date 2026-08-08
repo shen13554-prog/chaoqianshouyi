@@ -2341,6 +2341,105 @@ a {
   outline: 0;
 }
 
+.building-research__grid.is-guided .building-research-card figure {
+  animation: building-guide-breathe 2s ease-in-out infinite;
+}
+
+.building-guide {
+  position: fixed;
+  z-index: 900;
+  inset: 0;
+  pointer-events: none;
+  animation: building-guide-fade-in 380ms ease both;
+}
+
+.building-guide__spotlight {
+  position: fixed;
+  border: 1px solid var(--gold);
+  box-shadow:
+    0 0 0 100vmax rgba(38, 31, 24, 0.52),
+    0 0 22px rgba(179, 139, 64, 0.34);
+}
+
+.building-guide__card {
+  position: fixed;
+  width: 420px;
+  padding: 24px 28px 22px;
+  color: var(--ink);
+  background: rgba(247, 242, 231, 0.96);
+  border: 1px solid var(--gold-soft);
+  box-shadow: 0 18px 46px rgba(38, 31, 24, 0.18);
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.building-guide__card::before {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  border: 1px solid rgba(179, 139, 64, 0.28);
+  content: '';
+  pointer-events: none;
+}
+
+.building-guide__card p {
+  position: relative;
+  margin: 0 0 18px;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+.building-guide__card button {
+  position: relative;
+  padding: 8px 20px;
+  color: var(--vermilion);
+  background: transparent;
+  border: 1px solid var(--gold-soft);
+  font: inherit;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+
+.building-guide__arrow {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  width: 1px;
+  height: 34px;
+  background: var(--gold);
+}
+
+.building-guide__arrow::after {
+  position: absolute;
+  right: -4px;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  content: '';
+  transform: rotate(45deg);
+}
+
+.building-guide__card--side .building-guide__arrow {
+  top: 50%;
+  right: -35px;
+  bottom: auto;
+  left: auto;
+  width: 34px;
+  height: 1px;
+}
+
+.building-guide__card--side .building-guide__arrow::after {
+  top: -4px;
+  right: 0;
+  bottom: auto;
+  transform: rotate(-45deg);
+}
+
 .building-research-modal {
   position: fixed;
   z-index: 1000;
@@ -2468,6 +2567,27 @@ a {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes building-guide-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes building-guide-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(179, 139, 64, 0.18);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(179, 139, 64, 0.42);
   }
 }
 

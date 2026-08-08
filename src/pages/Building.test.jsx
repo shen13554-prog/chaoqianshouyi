@@ -5,12 +5,95 @@ import {
   screen,
   within,
 } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Building from './Building'
 
-afterEach(cleanup)
+const scrollIntoView = vi.fn()
+
+beforeEach(() => {
+  window.localStorage.clear()
+  scrollIntoView.mockClear()
+  Element.prototype.scrollIntoView = scrollIntoView
+})
+
+afterEach(() => {
+  cleanup()
+  window.localStorage.clear()
+  vi.restoreAllMocks()
+})
 
 describe('architecture regeneration detail', () => {
+  it('shows the first-visit guide and remembers manual dismissal', () => {
+    render(<Building />)
+
+    const guide = screen.getByRole('region', { name: '建筑案例使用引导' })
+
+    expect(guide.parentElement).toBe(document.body)
+    expect(
+      within(guide).getByText('点击建筑图片，探索建筑背后的嵌瓷文化与详细资料'),
+    ).toBeInTheDocument()
+    expect(scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'center',
+    })
+
+    fireEvent.click(within(guide).getByRole('button', { name: '知道了' }))
+
+    expect(
+      screen.queryByRole('region', { name: '建筑案例使用引导' }),
+    ).not.toBeInTheDocument()
+    expect(window.localStorage.getItem('chaoqianshouyi-building-guide-seen')).toBe('true')
+  })
+
+  it('positions the desktop guide beside rather than over the building images', () => {
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+      top: 60,
+      right: 1170,
+      bottom: 620,
+      left: 520,
+      width: 650,
+      height: 560,
+      x: 520,
+      y: 60,
+      toJSON: () => {},
+    })
+
+    render(<Building />)
+
+    const guide = screen.getByRole('region', { name: '建筑案例使用引导' })
+    const guideCard = within(guide).getByText(
+      '点击建筑图片，探索建筑背后的嵌瓷文化与详细资料',
+    ).parentElement
+
+    expect(Number.parseFloat(guideCard.style.left)).toBeLessThan(520)
+    expect(Number.parseFloat(guideCard.style.top)).toBeGreaterThanOrEqual(60)
+  })
+
+  it('does not show or scroll the guide after it has been viewed', () => {
+    window.localStorage.setItem('chaoqianshouyi-building-guide-seen', 'true')
+
+    render(<Building />)
+
+    expect(
+      screen.queryByRole('region', { name: '建筑案例使用引导' }),
+    ).not.toBeInTheDocument()
+    expect(scrollIntoView).not.toHaveBeenCalled()
+  })
+
+  it('dismisses the guide and opens the existing detail modal from a building image', () => {
+    render(<Building />)
+
+    fireEvent.click(screen.getByRole('button', { name: '查看安济王庙研究详情' }))
+
+    expect(
+      screen.queryByRole('region', { name: '建筑案例使用引导' }),
+    ).not.toBeInTheDocument()
+    expect(window.localStorage.getItem('chaoqianshouyi-building-guide-seen')).toBe('true')
+    expect(
+      screen.getByRole('dialog', { name: '安济王庙研究详情' }),
+    ).toBeInTheDocument()
+  })
+
   it('renders the architecture source gallery and three extraction exhibits', () => {
     render(<Building />)
 
