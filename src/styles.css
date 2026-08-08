@@ -671,6 +671,37 @@ a {
   margin-top: 74px;
   border: 1px solid var(--gold-soft);
   background: rgba(255, 252, 246, 0.42);
+  animation: history-detail-fade-in 300ms ease both;
+}
+
+.history-detail-pagination {
+  display: flex;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 14px 24px;
+  border: 1px solid var(--gold-soft);
+  border-top: 0;
+  background: rgba(255, 252, 246, 0.42);
+}
+
+.history-detail-pagination button {
+  padding: 8px 18px;
+  color: var(--vermilion);
+  font: inherit;
+  letter-spacing: 0.12em;
+  background: transparent;
+  border: 1px solid var(--gold-soft);
+  cursor: pointer;
+}
+
+@keyframes history-detail-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .history-detail__visual {

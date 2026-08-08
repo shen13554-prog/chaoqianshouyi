@@ -4,8 +4,16 @@ import HistoryScroll from '../components/HistoryScroll'
 import { historyTimeline } from '../data/historyTimeline'
 
 export default function History() {
-  const [activeId, setActiveId] = useState(historyTimeline[0].id)
-  const activeItem = historyTimeline.find((item) => item.id === activeId)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const currentItem = historyTimeline[currentIndex]
+
+  const handleNodeSelect = (id) => {
+    setCurrentIndex(historyTimeline.findIndex((item) => item.id === id))
+  }
+
+  const handlePageChange = (index) => {
+    setCurrentIndex(index)
+  }
 
   return (
     <div className="basic-page history-page">
@@ -18,10 +26,32 @@ export default function History() {
 
       <HistoryScroll
         items={historyTimeline}
-        activeId={activeId}
-        onSelect={setActiveId}
+        activeId={currentItem.id}
+        onSelect={handleNodeSelect}
       />
-      <HistoryDetailCard item={activeItem} />
+      <HistoryDetailCard item={currentItem} key={currentIndex} />
+      <nav className="history-detail-pagination" aria-label="历史资料卡分页">
+        <span>
+          {currentIndex > 0 ? (
+            <button
+              type="button"
+              onClick={() => handlePageChange(currentIndex - 1)}
+            >
+              上一页
+            </button>
+          ) : null}
+        </span>
+        <span>
+          {currentIndex < historyTimeline.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => handlePageChange(currentIndex + 1)}
+            >
+              下一页
+            </button>
+          ) : null}
+        </span>
+      </nav>
     </div>
   )
 }
