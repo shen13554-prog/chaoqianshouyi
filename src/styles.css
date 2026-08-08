@@ -1027,8 +1027,8 @@ a {
 .history-scroll__track::before {
   position: absolute;
   top: 244px;
-  right: calc(50px + var(--history-edge-gutter));
-  left: 0;
+  right: -500px;
+  left: -500px;
   height: 2px;
   content: "";
   background: linear-gradient(90deg, var(--gold), #667c62 48%, var(--vermilion));

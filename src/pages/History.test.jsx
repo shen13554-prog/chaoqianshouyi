@@ -55,10 +55,18 @@ describe('digital history scroll', () => {
     expect(scrollIntoView).toHaveBeenCalledTimes(2)
 
     fireEvent.click(nodes[7])
+    expect(nodes[7]).toHaveAttribute('aria-pressed', 'true')
+    expect(scrollIntoView).toHaveBeenLastCalledWith({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center',
+    })
+    expect(scrollIntoView).toHaveBeenCalledTimes(3)
+
     fireEvent.click(nodes[9])
     expect(nodes[9]).toHaveAttribute('aria-pressed', 'true')
-    expect(nodes[6]).not.toHaveClass('is-active')
-    expect(scrollIntoView).toHaveBeenCalledTimes(2)
+    expect(nodes[7]).not.toHaveClass('is-active')
+    expect(scrollIntoView).toHaveBeenCalledTimes(3)
   })
 
   it('renders ten historical nodes with the earliest period selected', () => {
