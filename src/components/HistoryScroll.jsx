@@ -1,4 +1,26 @@
-export default function HistoryScroll({ items, activeId, onSelect }) {
+import { useLayoutEffect, useRef } from 'react'
+
+export default function HistoryScroll({ items, activeIndex, onSelect }) {
+  const viewportRef = useRef(null)
+  const nodeRefs = useRef([])
+
+  useLayoutEffect(() => {
+    const firstStop = nodeRefs.current[0]?.parentElement
+
+    if (viewportRef.current && firstStop) {
+      viewportRef.current.scrollLeft = Math.max(0, firstStop.offsetLeft - 50)
+    }
+  }, [])
+
+  const handleSelect = (index) => {
+    onSelect(index)
+    nodeRefs.current[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    })
+  }
+
   return (
     <section className="history-scroll" aria-label="潮州嵌瓷历史长卷">
       <div className="history-scroll__heading">
@@ -9,10 +31,10 @@ export default function HistoryScroll({ items, activeId, onSelect }) {
         <span>横向浏览 · 点击印章查看历史</span>
       </div>
 
-      <div className="history-scroll__viewport">
+      <div className="history-scroll__viewport" ref={viewportRef}>
         <div className="history-scroll__track">
           {items.map((item, index) => {
-            const isActive = item.id === activeId
+            const isActive = index === activeIndex
             const sealClassName = [
               'history-seal',
               isActive ? 'is-active' : '',
@@ -28,11 +50,14 @@ export default function HistoryScroll({ items, activeId, onSelect }) {
                   <img src={item.image} alt="" />
                 </figure>
                 <button
+                  ref={(node) => {
+                    nodeRefs.current[index] = node
+                  }}
                   type="button"
                   className={sealClassName}
                   aria-label={item.period}
                   aria-pressed={isActive}
-                  onClick={() => onSelect(item.id)}
+                  onClick={() => handleSelect(index)}
                 >
                   <span>{item.period}</span>
                   <small>{item.year}</small>

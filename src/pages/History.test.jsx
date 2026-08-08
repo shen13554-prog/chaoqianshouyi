@@ -5,10 +5,17 @@ import {
   screen,
 } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import History from './History'
 
 afterEach(cleanup)
+
+const scrollIntoView = vi.fn()
+
+beforeEach(() => {
+  scrollIntoView.mockClear()
+  Element.prototype.scrollIntoView = scrollIntoView
+})
 
 function renderHistory() {
   return render(
@@ -24,6 +31,31 @@ function renderHistory() {
 }
 
 describe('digital history scroll', () => {
+  it('smoothly centers the first, middle, and last nodes when clicked', () => {
+    renderHistory()
+
+    const nodes = screen.getAllByRole('button')
+    expect(scrollIntoView).not.toHaveBeenCalled()
+
+    fireEvent.click(nodes[4])
+    expect(nodes[4]).toHaveAttribute('aria-pressed', 'true')
+    expect(nodes[4]).toHaveClass('is-active')
+    expect(scrollIntoView).toHaveBeenLastCalledWith({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    })
+
+    fireEvent.click(nodes[9])
+    expect(nodes[9]).toHaveAttribute('aria-pressed', 'true')
+    expect(nodes[4]).not.toHaveClass('is-active')
+
+    fireEvent.click(nodes[0])
+    expect(nodes[0]).toHaveAttribute('aria-pressed', 'true')
+    expect(nodes[9]).not.toHaveClass('is-active')
+    expect(scrollIntoView).toHaveBeenCalledTimes(3)
+  })
+
   it('renders ten historical nodes with the earliest period selected', () => {
     renderHistory()
 

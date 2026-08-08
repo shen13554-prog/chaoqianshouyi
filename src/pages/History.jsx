@@ -4,8 +4,8 @@ import HistoryScroll from '../components/HistoryScroll'
 import { historyTimeline } from '../data/historyTimeline'
 
 export default function History() {
-  const [activeId, setActiveId] = useState(historyTimeline[0].id)
-  const activeItem = historyTimeline.find((item) => item.id === activeId)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeItem = historyTimeline[activeIndex]
 
   return (
     <div className="basic-page history-page">
@@ -18,8 +18,8 @@ export default function History() {
 
       <HistoryScroll
         items={historyTimeline}
-        activeId={activeId}
-        onSelect={setActiveId}
+        activeIndex={activeIndex}
+        onSelect={setActiveIndex}
       />
       <HistoryDetailCard item={activeItem} />
     </div>

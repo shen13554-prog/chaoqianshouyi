@@ -1014,19 +1014,21 @@ a {
 }
 
 .history-scroll__track {
+  --history-edge-gutter: max(0px, calc(min(50vw, 640px) - 141px));
+
   position: relative;
-  width: 2280px;
+  width: calc(2280px + var(--history-edge-gutter) + var(--history-edge-gutter));
   height: 470px;
   display: flex;
   gap: 36px;
-  padding: 45px 50px;
+  padding: 45px calc(50px + var(--history-edge-gutter));
 }
 
 .history-scroll__track::before {
   position: absolute;
   top: 244px;
-  right: 50px;
-  left: 50px;
+  right: calc(50px + var(--history-edge-gutter));
+  left: calc(50px + var(--history-edge-gutter));
   height: 2px;
   content: "";
   background: linear-gradient(90deg, var(--gold), #667c62 48%, var(--vermilion));
@@ -1094,6 +1096,7 @@ a {
   border-radius: 4px;
   box-shadow: 0 0 0 1px #667c62, 0 0 0 5px var(--paper), 0 0 0 6px var(--gold);
   cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .history-seal::before {
@@ -1130,6 +1133,7 @@ a {
 .history-seal.is-active {
   background: var(--vermilion);
   box-shadow: 0 0 0 1px var(--vermilion), 0 0 0 5px var(--paper), 0 0 0 7px var(--gold);
+  transform: scale(1.04);
 }
 
 .history-scroll__caption {
