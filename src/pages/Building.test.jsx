@@ -3,6 +3,7 @@ import {
   fireEvent,
   render,
   screen,
+  within,
 } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import Building from './Building'
@@ -42,44 +43,51 @@ describe('architecture regeneration detail', () => {
     ).toBeInTheDocument()
   })
 
-  it('opens a building research detail from the source gallery', () => {
+  it('opens each building image in a modal with matching research data', () => {
     render(<Building />)
 
-    expect(
-      screen.queryByRole('region', { name: '安济王庙研究详情' }),
-    ).not.toBeInTheDocument()
+    const buildings = [
+      ['安济王庙', '/images/building/building_01.webp', '潮汕传统庙宇建筑'],
+      ['广济楼天后宫', '/images/building/building_02.png', '宫庙式公共文化建筑'],
+      ['观音庙', '/images/building/building_03.png', '潮汕传统信仰建筑'],
+      ['从熙公祠', '/images/building/building_04.png', '潮汕传统祠堂建筑'],
+    ]
 
-    const anjiCard = screen.getByRole('button', { name: '查看安济王庙研究详情' })
-    fireEvent.click(anjiCard)
+    buildings.forEach(([name, src, type]) => {
+      const card = screen.getByRole('button', { name: `查看${name}研究详情` })
+      fireEvent.click(card)
 
-    expect(anjiCard).toHaveAttribute('aria-pressed', 'true')
-    expect(
-      screen.getByRole('region', { name: '安济王庙研究详情' }),
-    ).toBeInTheDocument()
-    expect(screen.getByText('潮汕传统庙宇建筑')).toBeInTheDocument()
-    expect(screen.getByText('屋脊、檐部与正立面装饰区域')).toBeInTheDocument()
-    expect(
-      screen.getByText('通过瑞兽、花鸟等装饰语言表达守护、祈福与地方文化认同'),
-    ).toBeInTheDocument()
+      const dialog = screen.getByRole('dialog', { name: `${name}研究详情` })
+      expect(card).toHaveAttribute('aria-pressed', 'true')
+      expect(
+        within(dialog).getByRole('img', { name: `${name}建筑放大展示` }),
+      ).toHaveAttribute('src', src)
+      expect(within(dialog).getByText(type)).toBeInTheDocument()
+
+      fireEvent.click(
+        within(dialog).getByRole('button', { name: `关闭${name}研究详情` }),
+      )
+      expect(
+        screen.queryByRole('dialog', { name: `${name}研究详情` }),
+      ).not.toBeInTheDocument()
+    })
   })
 
-  it('switches building details and closes the active building on a second click', () => {
+  it('closes the building modal when the backdrop is clicked', () => {
     render(<Building />)
 
     fireEvent.click(screen.getByRole('button', { name: '查看安济王庙研究详情' }))
-    fireEvent.click(screen.getByRole('button', { name: '查看观音庙研究详情' }))
+    const dialog = screen.getByRole('dialog', { name: '安济王庙研究详情' })
+    const backdrop = screen.getByTestId('building-modal-backdrop')
 
-    expect(
-      screen.queryByRole('region', { name: '安济王庙研究详情' }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('region', { name: '观音庙研究详情' }),
-    ).toBeInTheDocument()
-    expect(screen.getByText('潮汕传统信仰建筑')).toBeInTheDocument()
+    expect(backdrop.parentElement).toBe(document.body)
 
-    fireEvent.click(screen.getByRole('button', { name: '关闭观音庙研究详情' }))
+    fireEvent.click(dialog)
+    expect(dialog).toBeInTheDocument()
+
+    fireEvent.click(backdrop)
     expect(
-      screen.queryByRole('region', { name: '观音庙研究详情' }),
+      screen.queryByRole('dialog', { name: '安济王庙研究详情' }),
     ).not.toBeInTheDocument()
   })
 

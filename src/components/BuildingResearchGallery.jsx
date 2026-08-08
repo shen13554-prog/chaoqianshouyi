@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom'
+
 export default function BuildingResearchGallery({ images, activeId, onToggle }) {
   const activeBuilding = images.find((image) => image.id === activeId) ?? null
 
@@ -32,37 +34,54 @@ export default function BuildingResearchGallery({ images, activeId, onToggle }) 
         })}
       </div>
 
-      {activeBuilding ? (
-        <section
-          className="building-research-detail"
-          id="building-research-detail"
-          aria-label={`${activeBuilding.name}研究详情`}
+      {activeBuilding ? createPortal((
+        <div
+          className="building-research-modal"
+          data-testid="building-modal-backdrop"
+          onClick={() => onToggle(activeBuilding.id)}
         >
-          <div className="building-research-detail__image">
-            <img src={activeBuilding.src} alt={`${activeBuilding.name}建筑放大展示`} />
-          </div>
-          <div className="building-research-detail__copy">
-            <p>ARCHITECTURE RESEARCH</p>
-            <h4 className={activeBuilding.id === 'guangji-tianhou' ? 'building-research-detail__title--long' : undefined}>
-              {activeBuilding.name}
-            </h4>
-            <dl>
-              <div>
-                <dt>建筑类型</dt>
-                <dd>{activeBuilding.type}</dd>
-              </div>
-              <div>
-                <dt>嵌瓷应用位置</dt>
-                <dd>{activeBuilding.location}</dd>
-              </div>
-              <div>
-                <dt>文化寓意</dt>
-                <dd>{activeBuilding.meaning}</dd>
-              </div>
-            </dl>
-          </div>
-        </section>
-      ) : null}
+          <section
+            className="building-research-detail building-research-modal__dialog"
+            id="building-research-detail"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activeBuilding.name}研究详情`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="building-research-modal__close"
+              aria-label={`关闭${activeBuilding.name}研究详情`}
+              onClick={() => onToggle(activeBuilding.id)}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+            <div className="building-research-detail__image">
+              <img src={activeBuilding.src} alt={`${activeBuilding.name}建筑放大展示`} />
+            </div>
+            <div className="building-research-detail__copy">
+              <p>ARCHITECTURE RESEARCH</p>
+              <h4 className={activeBuilding.id === 'guangji-tianhou' ? 'building-research-detail__title--long' : undefined}>
+                {activeBuilding.name}
+              </h4>
+              <dl>
+                <div>
+                  <dt>建筑类型</dt>
+                  <dd>{activeBuilding.type}</dd>
+                </div>
+                <div>
+                  <dt>嵌瓷应用位置</dt>
+                  <dd>{activeBuilding.location}</dd>
+                </div>
+                <div>
+                  <dt>文化寓意</dt>
+                  <dd>{activeBuilding.meaning}</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+        </div>
+      ), document.body) : null}
     </section>
   )
 }
