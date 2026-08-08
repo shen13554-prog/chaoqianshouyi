@@ -1,11 +1,22 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import HistoryDetailCard from '../components/HistoryDetailCard'
 import HistoryScroll from '../components/HistoryScroll'
 import { historyTimeline } from '../data/historyTimeline'
 
 export default function History() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const activeCardRef = useRef(null)
   const activeItem = historyTimeline[activeIndex]
+
+  const handleNodeClick = (index) => {
+    setActiveIndex(index)
+    requestAnimationFrame(() => {
+      activeCardRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    })
+  }
 
   return (
     <div className="basic-page history-page">
@@ -19,9 +30,11 @@ export default function History() {
       <HistoryScroll
         items={historyTimeline}
         activeIndex={activeIndex}
-        onSelect={setActiveIndex}
+        onSelect={handleNodeClick}
       />
-      <HistoryDetailCard item={activeItem} />
+      <div ref={activeCardRef}>
+        <HistoryDetailCard item={activeItem} />
+      </div>
     </div>
   )
 }

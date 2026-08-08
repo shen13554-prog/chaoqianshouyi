@@ -11,10 +11,17 @@ import History from './History'
 afterEach(cleanup)
 
 const scrollIntoView = vi.fn()
+const requestAnimationFrame = vi.fn()
 
 beforeEach(() => {
   scrollIntoView.mockClear()
   Element.prototype.scrollIntoView = scrollIntoView
+  requestAnimationFrame.mockReset()
+  requestAnimationFrame.mockImplementation((callback) => {
+    callback()
+    return 1
+  })
+  window.requestAnimationFrame = requestAnimationFrame
 })
 
 function renderHistory() {
@@ -35,6 +42,7 @@ describe('digital history scroll', () => {
     renderHistory()
 
     const nodes = screen.getAllByRole('button')
+    document.querySelector('.history-detail').parentElement.scrollIntoView = vi.fn()
     expect(scrollIntoView).not.toHaveBeenCalled()
 
     fireEvent.click(nodes[0])
@@ -67,6 +75,54 @@ describe('digital history scroll', () => {
     expect(nodes[9]).toHaveAttribute('aria-pressed', 'true')
     expect(nodes[7]).not.toHaveClass('is-active')
     expect(scrollIntoView).toHaveBeenCalledTimes(3)
+  })
+
+  it('smoothly centers the detail card after a history node is selected', () => {
+    renderHistory()
+
+    const detailCardScrollIntoView = vi.fn()
+    document.querySelector('.history-detail').parentElement.scrollIntoView =
+      detailCardScrollIntoView
+
+    expect(detailCardScrollIntoView).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getAllByRole('button')[9])
+
+    expect(detailCardScrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  })
+
+  it('queues detail-card scrolling after middle-node horizontal positioning', () => {
+    renderHistory()
+
+    const frameCallbacks = []
+    requestAnimationFrame.mockImplementation((callback) => {
+      frameCallbacks.push(callback)
+      return frameCallbacks.length
+    })
+    const nodes = screen.getAllByRole('button')
+    const detailCardScrollIntoView = vi.fn()
+    document.querySelector('.history-detail').parentElement.scrollIntoView =
+      detailCardScrollIntoView
+
+    ;[3, 4, 5, 6, 7].forEach((index) => {
+      const previousCalls = detailCardScrollIntoView.mock.calls.length
+
+      fireEvent.click(nodes[index])
+
+      expect(detailCardScrollIntoView).toHaveBeenCalledTimes(previousCalls)
+      expect(frameCallbacks).toHaveLength(1)
+
+      frameCallbacks.shift()()
+
+      expect(detailCardScrollIntoView).toHaveBeenCalledTimes(previousCalls + 1)
+      expect(detailCardScrollIntoView).toHaveBeenLastCalledWith({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    })
   })
 
   it('renders ten historical nodes with the earliest period selected', () => {
