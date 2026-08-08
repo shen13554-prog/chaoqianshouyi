@@ -1,4 +1,5 @@
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -172,6 +173,52 @@ describe('architecture regeneration detail', () => {
     expect(
       screen.queryByRole('dialog', { name: '安济王庙研究详情' }),
     ).not.toBeInTheDocument()
+  })
+
+  it('pages through building research cards with directional transitions', () => {
+    window.localStorage.setItem('chaoqianshouyi-building-guide-seen', 'true')
+    vi.useFakeTimers()
+
+    try {
+      render(<Building />)
+      fireEvent.click(screen.getByRole('button', { name: '查看安济王庙研究详情' }))
+
+      let dialog = screen.getByRole('dialog', { name: '安济王庙研究详情' })
+      expect(within(dialog).queryByRole('button', { name: '上一页' })).not.toBeInTheDocument()
+      expect(within(dialog).getByRole('button', { name: '下一页' })).toBeInTheDocument()
+
+      fireEvent.click(within(dialog).getByRole('button', { name: '下一页' }))
+      expect(within(dialog).getByTestId('building-modal-page')).toHaveClass('is-exiting-next')
+
+      act(() => vi.advanceTimersByTime(400))
+      dialog = screen.getByRole('dialog', { name: '广济楼天后宫研究详情' })
+      expect(within(dialog).getByText('宫庙式公共文化建筑')).toBeInTheDocument()
+      expect(within(dialog).getByTestId('building-modal-page')).toHaveClass('is-entering-next')
+      expect(within(dialog).getByRole('button', { name: '上一页' })).toBeInTheDocument()
+      expect(within(dialog).getByRole('button', { name: '下一页' })).toBeInTheDocument()
+
+      act(() => vi.advanceTimersByTime(400))
+      fireEvent.click(within(dialog).getByRole('button', { name: '下一页' }))
+      act(() => vi.advanceTimersByTime(800))
+      dialog = screen.getByRole('dialog', { name: '观音庙研究详情' })
+      fireEvent.click(within(dialog).getByRole('button', { name: '下一页' }))
+      act(() => vi.advanceTimersByTime(400))
+
+      dialog = screen.getByRole('dialog', { name: '从熙公祠研究详情' })
+      expect(within(dialog).getByRole('button', { name: '上一页' })).toBeInTheDocument()
+      expect(within(dialog).queryByRole('button', { name: '下一页' })).not.toBeInTheDocument()
+
+      act(() => vi.advanceTimersByTime(400))
+      fireEvent.click(within(dialog).getByRole('button', { name: '上一页' }))
+      expect(within(dialog).getByTestId('building-modal-page')).toHaveClass('is-exiting-previous')
+      act(() => vi.advanceTimersByTime(400))
+
+      dialog = screen.getByRole('dialog', { name: '观音庙研究详情' })
+      expect(within(dialog).getByTestId('building-modal-page')).toHaveClass('is-entering-previous')
+    } finally {
+      vi.runOnlyPendingTimers()
+      vi.useRealTimers()
+    }
   })
 
   it('presents the color, motif, and joining research items', () => {

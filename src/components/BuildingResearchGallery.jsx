@@ -5,11 +5,21 @@ const BUILDING_GUIDE_STORAGE_KEY = 'chaoqianshouyi-building-guide-seen'
 
 export default function BuildingResearchGallery({ images, activeId, onToggle }) {
   const gridRef = useRef(null)
+  const transitionTimerRef = useRef(null)
   const [showGuide, setShowGuide] = useState(
     () => window.localStorage.getItem(BUILDING_GUIDE_STORAGE_KEY) !== 'true',
   )
   const [guideTarget, setGuideTarget] = useState(null)
+  const [pageTransition, setPageTransition] = useState({
+    phase: 'idle',
+    direction: null,
+  })
   const activeBuilding = images.find((image) => image.id === activeId) ?? null
+  const activeIndex = images.findIndex((image) => image.id === activeId)
+
+  useEffect(() => () => {
+    window.clearTimeout(transitionTimerRef.current)
+  }, [])
 
   useEffect(() => {
     if (!showGuide || !gridRef.current) return undefined
@@ -45,6 +55,37 @@ export default function BuildingResearchGallery({ images, activeId, onToggle }) 
     if (showGuide) dismissGuide()
     onToggle(imageId)
   }
+
+  const resetPageTransition = () => {
+    window.clearTimeout(transitionTimerRef.current)
+    setPageTransition({ phase: 'idle', direction: null })
+  }
+
+  const closeActiveBuilding = () => {
+    resetPageTransition()
+    onToggle(activeBuilding.id)
+  }
+
+  const handlePageChange = (direction) => {
+    if (pageTransition.phase !== 'idle') return
+
+    const offset = direction === 'next' ? 1 : -1
+    const nextBuilding = images[activeIndex + offset]
+    if (!nextBuilding) return
+
+    setPageTransition({ phase: 'exit', direction })
+    transitionTimerRef.current = window.setTimeout(() => {
+      onToggle(nextBuilding.id)
+      setPageTransition({ phase: 'enter', direction })
+      transitionTimerRef.current = window.setTimeout(() => {
+        setPageTransition({ phase: 'idle', direction: null })
+      }, 400)
+    }, 400)
+  }
+
+  const pageTransitionClass = pageTransition.phase === 'idle'
+    ? ''
+    : ` is-${pageTransition.phase}ing-${pageTransition.direction}`
 
   const guideSpotlightStyle = guideTarget ? {
     top: guideTarget.top - 8,
@@ -125,7 +166,7 @@ export default function BuildingResearchGallery({ images, activeId, onToggle }) 
         <div
           className="building-research-modal"
           data-testid="building-modal-backdrop"
-          onClick={() => onToggle(activeBuilding.id)}
+          onClick={closeActiveBuilding}
         >
           <section
             className="building-research-detail building-research-modal__dialog"
@@ -139,33 +180,61 @@ export default function BuildingResearchGallery({ images, activeId, onToggle }) 
               type="button"
               className="building-research-modal__close"
               aria-label={`关闭${activeBuilding.name}研究详情`}
-              onClick={() => onToggle(activeBuilding.id)}
+              onClick={closeActiveBuilding}
             >
               <span aria-hidden="true">×</span>
             </button>
-            <div className="building-research-detail__image">
-              <img src={activeBuilding.src} alt={`${activeBuilding.name}建筑放大展示`} />
+            <div
+              className={`building-research-modal__page${pageTransitionClass}`}
+              data-testid="building-modal-page"
+              key={activeBuilding.id}
+            >
+              <div className="building-research-detail__image">
+                <img src={activeBuilding.src} alt={`${activeBuilding.name}建筑放大展示`} />
+              </div>
+              <div className="building-research-detail__copy">
+                <p>ARCHITECTURE RESEARCH</p>
+                <h4 className={activeBuilding.id === 'guangji-tianhou' ? 'building-research-detail__title--long' : undefined}>
+                  {activeBuilding.name}
+                </h4>
+                <dl>
+                  <div>
+                    <dt>建筑类型</dt>
+                    <dd>{activeBuilding.type}</dd>
+                  </div>
+                  <div>
+                    <dt>嵌瓷应用位置</dt>
+                    <dd>{activeBuilding.location}</dd>
+                  </div>
+                  <div>
+                    <dt>文化寓意</dt>
+                    <dd>{activeBuilding.meaning}</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-            <div className="building-research-detail__copy">
-              <p>ARCHITECTURE RESEARCH</p>
-              <h4 className={activeBuilding.id === 'guangji-tianhou' ? 'building-research-detail__title--long' : undefined}>
-                {activeBuilding.name}
-              </h4>
-              <dl>
-                <div>
-                  <dt>建筑类型</dt>
-                  <dd>{activeBuilding.type}</dd>
-                </div>
-                <div>
-                  <dt>嵌瓷应用位置</dt>
-                  <dd>{activeBuilding.location}</dd>
-                </div>
-                <div>
-                  <dt>文化寓意</dt>
-                  <dd>{activeBuilding.meaning}</dd>
-                </div>
-              </dl>
-            </div>
+            <nav className="building-research-pagination" aria-label="建筑资料分页">
+              {activeIndex > 0 ? (
+                <button
+                  type="button"
+                  className="building-research-pagination__button building-research-pagination__button--previous"
+                  onClick={() => handlePageChange('previous')}
+                  disabled={pageTransition.phase !== 'idle'}
+                >
+                  上一页
+                </button>
+              ) : null}
+              {activeIndex < images.length - 1 ? (
+                <button
+                  type="button"
+                  className="building-research-pagination__button building-research-pagination__button--next"
+                  onClick={() => handlePageChange('next')}
+                  disabled={pageTransition.phase !== 'idle'}
+                >
+                  下一页
+                </button>
+              ) : null}
+            </nav>
           </section>
         </div>
       ), document.body) : null}

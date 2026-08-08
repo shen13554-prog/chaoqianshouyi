@@ -2493,10 +2493,33 @@ a {
 }
 
 .building-research-detail {
+  position: relative;
+  margin-top: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid var(--gold-soft);
+}
+
+.building-research-modal__page {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  margin-top: 1px;
-  border: 1px solid var(--gold-soft);
+  width: 100%;
+}
+
+.building-research-modal__page.is-exiting-next {
+  animation: building-page-exit-left 400ms ease both;
+}
+
+.building-research-modal__page.is-entering-next {
+  animation: building-page-enter-right 400ms ease both;
+}
+
+.building-research-modal__page.is-exiting-previous {
+  animation: building-page-exit-right 400ms ease both;
+}
+
+.building-research-modal__page.is-entering-previous {
+  animation: building-page-enter-left 400ms ease both;
 }
 
 .building-research-detail__image img {
@@ -2554,6 +2577,42 @@ a {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.9;
+}
+
+.building-research-pagination {
+  position: absolute;
+  z-index: 2;
+  right: 28px;
+  bottom: 20px;
+  left: 28px;
+  pointer-events: none;
+}
+
+.building-research-pagination__button {
+  position: absolute;
+  bottom: 0;
+  padding: 6px 0;
+  color: var(--brown);
+  font: inherit;
+  letter-spacing: 0.12em;
+  background: var(--paper);
+  border: 0;
+  border-bottom: 1px solid var(--gold-soft);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.building-research-pagination__button--previous {
+  left: 0;
+}
+
+.building-research-pagination__button--next {
+  right: 0;
+}
+
+.building-research-pagination__button:disabled {
+  cursor: default;
+  opacity: 0.45;
 }
 
 @keyframes building-modal-fade-in {
@@ -3138,6 +3197,34 @@ a {
   from {
     opacity: 0;
     transform: translateX(100%);
+  }
+}
+
+@keyframes building-page-exit-left {
+  to {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes building-page-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes building-page-exit-right {
+  to {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+@keyframes building-page-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
   }
 }
 
