@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ExploreCard from '../components/ExploreCard'
 import ImageCard from '../components/ImageCard'
+import IntroVideoBanner from '../components/IntroVideoBanner'
 import PosterHotspot from '../components/PosterHotspot'
 import SectionTitle from '../components/SectionTitle'
 
@@ -117,10 +118,17 @@ const selectedWorks = [
 
 export default function Home() {
   const [activeHotspot, setActiveHotspot] = useState(null)
+  const [isContentRevealed, setIsContentRevealed] = useState(false)
+  const heroRef = useRef(null)
 
   return (
     <>
-      <section className="hero section-container">
+      <IntroVideoBanner
+        targetRef={heroRef}
+        onReveal={() => setIsContentRevealed(true)}
+      />
+      <div className={isContentRevealed ? 'home-content is-revealed' : 'home-content'}>
+      <section ref={heroRef} className="hero section-container">
         <img
           className="hero__image"
           src="/images/building/anji_wangmiao.webp"
@@ -190,6 +198,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      </div>
     </>
   )
 }

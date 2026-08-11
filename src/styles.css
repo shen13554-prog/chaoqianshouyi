@@ -151,6 +151,83 @@ a {
   width: 22px;
 }
 
+.intro-video-banner {
+  position: relative;
+  width: 100%;
+  height: 76vh;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #211b17;
+  border-bottom: 1px solid var(--gold-soft);
+}
+
+.intro-video-banner::after {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 18%;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(244, 239, 227, 0.72));
+}
+
+.intro-video-banner video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.intro-video-banner__skip {
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  right: 34px;
+  padding: 10px 18px;
+  color: var(--vermilion);
+  background: rgba(244, 239, 227, 0.88);
+  border: 1px solid var(--gold-soft);
+  cursor: pointer;
+  letter-spacing: 0.12em;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.intro-video-banner__skip:hover,
+.intro-video-banner__skip:focus-visible {
+  color: var(--brown);
+  background: rgba(244, 239, 227, 0.98);
+  border-color: var(--gold);
+}
+
+.home-content.is-revealed .hero__image,
+.home-content.is-revealed .hero__copy,
+.home-content.is-revealed .text-link,
+.home-content.is-revealed .outline-link,
+.home-content.is-revealed .culture-intro__poster {
+  animation: home-content-reveal 800ms ease both;
+}
+
+.home-content.is-revealed .hero__copy {
+  animation-delay: 120ms;
+}
+
+.home-content.is-revealed .text-link,
+.home-content.is-revealed .outline-link,
+.home-content.is-revealed .culture-intro__poster {
+  animation-delay: 240ms;
+}
+
+@keyframes home-content-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
 .hero {
   position: relative;
   height: min(70vh, 720px);
@@ -3410,6 +3487,20 @@ a {
 }
 
 @media (max-width: 767px) {
+  .intro-video-banner {
+    width: 100vw;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .intro-video-banner__skip {
+    top: 14px;
+    right: 14px;
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
   body::before {
     background-position: center bottom;
     background-size: auto 100%;
