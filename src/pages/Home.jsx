@@ -4,6 +4,7 @@ import ExploreCard from '../components/ExploreCard'
 import ImageCard from '../components/ImageCard'
 import IntroVideoBanner from '../components/IntroVideoBanner'
 import PosterHotspot from '../components/PosterHotspot'
+import PosterInfoCard from '../components/PosterInfoCard'
 import SectionTitle from '../components/SectionTitle'
 
 const posterHotspots = [
@@ -158,6 +159,13 @@ export default function Home() {
               hotspot={hotspot}
               isActive={activeHotspot === hotspot.id}
               onActivate={setActiveHotspot}
+            />
+          ))}
+          {posterHotspots.map((hotspot) => (
+            <PosterInfoCard
+              key={`${hotspot.id}-card`}
+              hotspot={hotspot}
+              isActive={activeHotspot === hotspot.id}
             />
           ))}
         </div>

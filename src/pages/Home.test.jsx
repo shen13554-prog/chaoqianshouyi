@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { resolvePosterCardSide } from '../components/PosterInfoCard'
 import Home from './Home'
 
 afterEach(() => {
@@ -18,6 +19,17 @@ function renderHome() {
 }
 
 describe('Home poster reading hotspots', () => {
+  it('places an automatic middle hotspot on the side with more room', () => {
+    expect(resolvePosterCardSide({
+      side: 'auto',
+      area: { left: '40%', width: '10%' },
+    })).toBe('right')
+    expect(resolvePosterCardSide({
+      side: 'auto',
+      area: { left: '55%', width: '10%' },
+    })).toBe('left')
+  })
+
   it('renders a non-looping autoplay video banner before the hero', () => {
     const { container } = renderHome()
     const video = screen.getByLabelText('潮嵌守艺视频序章')
@@ -92,15 +104,30 @@ describe('Home poster reading hotspots', () => {
   })
 
   it('shows the matching information card on hover and hides it on leave', () => {
-    renderHome()
-    const hotspot = screen.getByLabelText('查看嵌瓷介绍')
+    const { container } = renderHome()
+    const leftHotspot = screen.getByLabelText('查看嵌瓷介绍')
+    const rightHotspot = screen.getByLabelText('查看标志建筑')
 
-    fireEvent.mouseEnter(hotspot)
+    expect(screen.getAllByTestId('poster-info-card')).toHaveLength(7)
+
+    fireEvent.mouseEnter(leftHotspot)
+    const leftCard = screen.getByRole('status').closest('[data-testid="poster-info-card"]')
+    expect(leftCard).toHaveClass('poster-info--left', 'is-active')
+    expect(leftCard.querySelector('.poster-info__connector')).toBeInTheDocument()
+    expect(leftCard.style.getPropertyValue('--hotspot-x')).toMatch(/%$/)
+    expect(leftCard.style.getPropertyValue('--hotspot-y')).toMatch(/%$/)
     expect(screen.getByRole('status')).toHaveTextContent('嵌瓷介绍')
     expect(screen.getByRole('status')).toHaveTextContent('彩釉瓷片')
 
-    fireEvent.mouseLeave(hotspot)
+    fireEvent.mouseLeave(leftHotspot)
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('poster-info-card')).toHaveLength(7)
+
+    fireEvent.mouseEnter(rightHotspot)
+    const rightCard = screen.getByRole('status').closest('[data-testid="poster-info-card"]')
+    expect(rightCard).toHaveClass('poster-info--right', 'is-active')
+
+    expect(container.querySelector('.culture-intro__poster')).toContainElement(rightCard)
   })
 
   it('lists the four provinces in the regional distribution card', () => {
