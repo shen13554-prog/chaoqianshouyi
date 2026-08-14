@@ -1,4 +1,4 @@
-export default function PosterHotspot({ hotspot, isActive, onActivate }) {
+export default function PosterHotspot({ hotspot, isActive, onActivate, onFirstHover }) {
   const { id, title, side, area } = hotspot
 
   return (
@@ -8,7 +8,10 @@ export default function PosterHotspot({ hotspot, isActive, onActivate }) {
       data-testid="poster-hotspot"
       role="button"
       style={area}
-      onMouseEnter={() => onActivate(id)}
+      onMouseEnter={() => {
+        onFirstHover?.()
+        onActivate(id)
+      }}
       onMouseLeave={() => onActivate(null)}
     />
   )

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ExploreCard from '../components/ExploreCard'
 import ImageCard from '../components/ImageCard'
@@ -6,6 +6,8 @@ import IntroVideoBanner from '../components/IntroVideoBanner'
 import PosterHotspot from '../components/PosterHotspot'
 import PosterInfoCard from '../components/PosterInfoCard'
 import SectionTitle from '../components/SectionTitle'
+
+const POSTER_GUIDE_STORAGE_KEY = 'chaoqian-poster-guide-viewed'
 
 const posterHotspots = [
   {
@@ -120,7 +122,38 @@ const selectedWorks = [
 export default function Home() {
   const [activeHotspot, setActiveHotspot] = useState(null)
   const [isContentRevealed, setIsContentRevealed] = useState(false)
+  const [isPosterGuideVisible, setIsPosterGuideVisible] = useState(false)
+  const [shouldShowPosterGuide] = useState(
+    () => window.localStorage.getItem(POSTER_GUIDE_STORAGE_KEY) !== 'true',
+  )
   const heroRef = useRef(null)
+  const posterRef = useRef(null)
+
+  useEffect(() => {
+    if (
+      !shouldShowPosterGuide
+      || !posterRef.current
+      || typeof IntersectionObserver === 'undefined'
+    ) return undefined
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return
+
+      window.localStorage.setItem(POSTER_GUIDE_STORAGE_KEY, 'true')
+      setIsPosterGuideVisible(true)
+      observer.disconnect()
+    }, { threshold: 0.15 })
+
+    observer.observe(posterRef.current)
+    return () => observer.disconnect()
+  }, [shouldShowPosterGuide])
+
+  useEffect(() => {
+    if (!isPosterGuideVisible) return undefined
+
+    const timer = window.setTimeout(() => setIsPosterGuideVisible(false), 3500)
+    return () => window.clearTimeout(timer)
+  }, [isPosterGuideVisible])
 
   return (
     <>
@@ -148,7 +181,15 @@ export default function Home() {
           title="一瓷一嵌，守艺潮声"
           subtitle="从建筑屋脊之上，读见潮汕民间工艺的绚丽篇章"
         />
-        <div className="culture-intro__poster">
+        <div className="poster-guide-slot" aria-live="polite">
+          {isPosterGuideVisible && (
+            <div className="poster-guide" role="status">
+              <span className="poster-guide__mouse" aria-hidden="true" />
+              <span>移至海报细节 · 探索嵌瓷信息</span>
+            </div>
+          )}
+        </div>
+        <div ref={posterRef} className="culture-intro__poster">
           <img
             src="/images/intro/intro_scroll_poster.webp"
             alt="潮汕嵌瓷文化介绍长图"
@@ -159,6 +200,7 @@ export default function Home() {
               hotspot={hotspot}
               isActive={activeHotspot === hotspot.id}
               onActivate={setActiveHotspot}
+              onFirstHover={() => setIsPosterGuideVisible(false)}
             />
           ))}
           {posterHotspots.map((hotspot) => (

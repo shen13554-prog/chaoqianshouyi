@@ -1,11 +1,28 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { resolvePosterCardSide } from '../components/PosterInfoCard'
 import Home from './Home'
 
+const POSTER_GUIDE_STORAGE_KEY = 'chaoqian-poster-guide-viewed'
+let intersectionCallback
+
+beforeEach(() => {
+  window.localStorage.clear()
+  intersectionCallback = null
+  window.IntersectionObserver = vi.fn((callback) => {
+    intersectionCallback = callback
+    return {
+      observe: vi.fn(),
+      disconnect: vi.fn(),
+    }
+  })
+})
+
 afterEach(() => {
   cleanup()
+  window.localStorage.clear()
+  delete window.IntersectionObserver
   vi.useRealTimers()
   vi.restoreAllMocks()
 })
@@ -19,6 +36,41 @@ function renderHome() {
 }
 
 describe('Home poster reading hotspots', () => {
+  it('shows the poster guide once on viewport entry and hides it after 3.5 seconds', () => {
+    vi.useFakeTimers()
+    renderHome()
+
+    expect(screen.queryByText('移至海报细节 · 探索嵌瓷信息')).not.toBeInTheDocument()
+
+    act(() => intersectionCallback([{ isIntersecting: true }]))
+    expect(screen.getByText('移至海报细节 · 探索嵌瓷信息')).toBeInTheDocument()
+    expect(window.localStorage.getItem(POSTER_GUIDE_STORAGE_KEY)).toBe('true')
+
+    act(() => vi.advanceTimersByTime(3499))
+    expect(screen.getByText('移至海报细节 · 探索嵌瓷信息')).toBeInTheDocument()
+
+    act(() => vi.advanceTimersByTime(1))
+    expect(screen.queryByText('移至海报细节 · 探索嵌瓷信息')).not.toBeInTheDocument()
+  })
+
+  it('hides the poster guide immediately when a hotspot is hovered', () => {
+    renderHome()
+    act(() => intersectionCallback([{ isIntersecting: true }]))
+
+    fireEvent.mouseEnter(screen.getByLabelText('查看嵌瓷介绍'))
+
+    expect(screen.queryByText('移至海报细节 · 探索嵌瓷信息')).not.toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('嵌瓷介绍')
+  })
+
+  it('does not show the poster guide again after it has been viewed', () => {
+    window.localStorage.setItem(POSTER_GUIDE_STORAGE_KEY, 'true')
+    renderHome()
+
+    expect(window.IntersectionObserver).not.toHaveBeenCalled()
+    expect(screen.queryByText('移至海报细节 · 探索嵌瓷信息')).not.toBeInTheDocument()
+  })
+
   it('places an automatic middle hotspot on the side with more room', () => {
     expect(resolvePosterCardSide({
       side: 'auto',
