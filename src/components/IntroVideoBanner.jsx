@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import introVideo from '../assets/video/chaoqian-intro.mp4'
 import introPoster from '../assets/video/chaoqian-intro-poster.jpg'
 
 const ENTRY_DELAY = 1500
 const SCROLL_DURATION = 2000
+const MOBILE_VIDEO_QUERY = '(max-width: 900px)'
 
 const easeInOutCubic = (progress) => (
   progress < 0.5
@@ -12,6 +13,7 @@ const easeInOutCubic = (progress) => (
 )
 
 export default function IntroVideoBanner({ targetRef, onReveal }) {
+  const [showPlayButton, setShowPlayButton] = useState(false)
   const videoRef = useRef(null)
   const waitTimerRef = useRef(null)
   const animationFrameRef = useRef(null)
@@ -22,6 +24,25 @@ export default function IntroVideoBanner({ targetRef, onReveal }) {
     if (animationFrameRef.current !== null) {
       window.cancelAnimationFrame(animationFrameRef.current)
     }
+  }, [])
+
+  const attemptMobilePlayback = async () => {
+    const video = videoRef.current
+    if (!video || !window.matchMedia?.(MOBILE_VIDEO_QUERY).matches) return
+
+    video.muted = true
+    video.defaultMuted = true
+
+    try {
+      await video.play()
+      setShowPlayButton(false)
+    } catch {
+      setShowPlayButton(true)
+    }
+  }
+
+  useEffect(() => {
+    attemptMobilePlayback()
   }, [])
 
   const startEntry = () => {
@@ -80,6 +101,15 @@ export default function IntroVideoBanner({ targetRef, onReveal }) {
       >
         跳过序章
       </button>
+      {showPlayButton && (
+        <button
+          type="button"
+          className="intro-video-banner__play"
+          onClick={attemptMobilePlayback}
+        >
+          播放序章
+        </button>
+      )}
     </section>
   )
 }
