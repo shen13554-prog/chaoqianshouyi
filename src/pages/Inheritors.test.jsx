@@ -138,8 +138,12 @@ describe('inheritor lineage exhibition', () => {
   it('pages through archive details and hides controls at the boundaries', () => {
     render(<Inheritors />)
 
-    expect(screen.queryByRole('button', { name: '上一页' })).not.toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+    expect(
+      screen.queryByRole('button', { name: `← ${inheritors[0].name}` }),
+    ).not.toBeInTheDocument()
+    fireEvent.click(
+      screen.getByRole('button', { name: `${inheritors[1].name} →` }),
+    )
 
     expect(
       screen.getByRole('button', { name: inheritors[1].name }),
@@ -149,24 +153,44 @@ describe('inheritor lineage exhibition', () => {
         name: `${inheritors[1].name}人物档案`,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '下一页' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: `← ${inheritors[0].name}` }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: `${inheritors[2].name} →` }),
+    ).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
-    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+    fireEvent.click(
+      screen.getByRole('button', { name: `${inheritors[2].name} →` }),
+    )
+    expect(
+      screen.getByRole('button', { name: `← ${inheritors[1].name}` }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: `${inheritors[3].name} →` }),
+    ).toBeInTheDocument()
+    fireEvent.click(
+      screen.getByRole('button', { name: `${inheritors[3].name} →` }),
+    )
 
     expect(
       screen.getByRole('button', { name: inheritors[3].name }),
     ).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: '上一页' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: '下一页' })).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: `← ${inheritors[2].name}` }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: `${inheritors[3].name} →` }),
+    ).not.toBeInTheDocument()
   })
 
   it('cross-slides archive details in the pagination direction for 400ms', () => {
     vi.useFakeTimers()
     render(<Inheritors />)
 
-    fireEvent.click(screen.getByRole('button', { name: '下一页' }))
+    fireEvent.click(
+      screen.getByRole('button', { name: `${inheritors[1].name} →` }),
+    )
 
     const firstOutgoing = document.querySelector(
       `[aria-label="${inheritors[0].name}人物档案"]`,
@@ -187,7 +211,9 @@ describe('inheritor lineage exhibition', () => {
       ),
     ).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: '上一页' }))
+    fireEvent.click(
+      screen.getByRole('button', { name: `← ${inheritors[0].name}` }),
+    )
 
     expect(
       document.querySelector(

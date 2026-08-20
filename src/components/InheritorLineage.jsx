@@ -18,6 +18,9 @@ function InheritorDetailCard({
   isOutgoing = false,
   onPageChange,
 }) {
+  const previousInheritor = inheritors[activeIndex - 1]
+  const nextInheritor = inheritors[activeIndex + 1]
+
   return (
     <article
       className={`inheritor-detail${isHighlighted ? ' is-highlighted' : ''}${className ? ` ${className}` : ''}`}
@@ -51,20 +54,20 @@ function InheritorDetailCard({
 
         {onPageChange ? (
           <nav className="inheritor-detail__pagination" aria-label="传承人物资料分页">
-            {activeIndex > 0 ? (
+            {previousInheritor ? (
               <button
                 type="button"
                 onClick={() => onPageChange(activeIndex - 1)}
               >
-                上一页
+                ← {previousInheritor.name}
               </button>
             ) : <span />}
-            {activeIndex < inheritors.length - 1 ? (
+            {nextInheritor ? (
               <button
                 type="button"
                 onClick={() => onPageChange(activeIndex + 1)}
               >
-                下一页
+                {nextInheritor.name} →
               </button>
             ) : null}
           </nav>
